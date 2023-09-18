@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv8fhnkjyxyb4"]
+
+[ext_resource type="Script" path="res://Scripts/turret.gd" id="1_fklyn"]
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_t6w5q"]
+[ext_resource type="Texture2D" uid="uid://dywh8x3h50q5b" path="res://Assets/Particles/trace_08.png" id="2_w1ial"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_30h0n"]
+size = Vector2(16, 14)
+
+[node name="Turret" type="RigidBody2D"]
+script = ExtResource("1_fklyn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_30h0n")
+metadata/_edit_lock_ = true
+
+[node name="Base" type="Sprite2D" parent="."]
+texture = ExtResource("1_t6w5q")
+region_enabled = true
+region_rect = Rect2(48, 8, 16, 16)
+metadata/_edit_lock_ = true
+
+[node name="ScanLight" type="ColorRect" parent="."]
+offset_left = -3.0
+offset_top = -8.0
+offset_right = -2.0
+offset_bottom = -7.0
+color = Color(100, 1, 1, 1)
+
+[node name="Head" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("1_t6w5q")
+region_enabled = true
+region_rect = Rect2(64, 8, 16, 16)
+metadata/_edit_lock_ = true
+
+[node name="Eye" type="ColorRect" parent="Head"]
+offset_left = 2.0
+offset_top = -1.0
+offset_right = 4.0
+color = Color(100, 0.0941176, 0.101961, 1)
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="Laser" type="PointLight2D" parent="Head"]
+position = Vector2(4.00001, 0)
+rotation = -1.5708
+scale = Vector2(0.0477417, 1.21406)
+color = Color(1, 0, 0, 1)
+energy = 100.0
+shadow_enabled = true
+texture = ExtResource("2_w1ial")
+offset = Vector2(0, 100)
+metadata/_edit_lock_ = true
+
+[node name="ScanTimer" type="Timer" parent="."]

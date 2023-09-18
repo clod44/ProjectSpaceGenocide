@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmrhtgypdx0m0"]
+
+[ext_resource type="Script" path="res://Scripts/camera.gd" id="1_pgpap"]
+
+[node name="Camera" type="Camera2D"]
+script = ExtResource("1_pgpap")
+
+[node name="Timer" type="Timer" parent="."]

@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://d03nt58oghhsh"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_begxr"]
+[ext_resource type="Script" path="res://Scripts/mine.gd" id="1_rvjqs"]
+[ext_resource type="Texture2D" uid="uid://dt1fhl3srqfcj" path="res://Assets/Particles/star_09.png" id="3_iyuj1"]
+[ext_resource type="Texture2D" uid="uid://4ifi3umd3ofu" path="res://Assets/Particles/smoke_07.png" id="4_xj84c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3k0je"]
+radius = 3.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b4dwa"]
+
+[sub_resource type="Curve" id="Curve_eaqko"]
+max_value = 2.0
+_data = [Vector2(0, 1.94306), 0.0, 0.0, 0, 0, Vector2(1, 0.975089), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qates"]
+_data = [Vector2(0, 0.231317), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_kv4rt"]
+offsets = PackedFloat32Array(0.159292, 0.20354, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.0100903, 0.0100903, 0.0100903, 1, 0, 0, 0, 0)
+
+[node name="Mine" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_rvjqs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_3k0je")
+debug_color = Color(0.698039, 0.278431, 1, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("1_begxr")
+region_enabled = true
+region_rect = Rect2(64, 0, 8, 8)
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_b4dwa")
+metadata/_edit_lock_ = true
+
+[node name="ExplosionLight" type="PointLight2D" parent="."]
+position = Vector2(0, -1)
+enabled = false
+shadow_enabled = true
+texture = ExtResource("3_iyuj1")
+
+[node name="ExplosionEffect" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 24
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.43
+texture = ExtResource("4_xj84c")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+damping_min = 20.27
+damping_max = 59.459
+damping_curve = SubResource("Curve_eaqko")
+scale_amount_min = 0.01
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_qates")
+color = Color(100, 1, 0.584314, 1)
+color_ramp = SubResource("Gradient_kv4rt")

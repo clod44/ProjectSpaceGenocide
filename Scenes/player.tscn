@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://dg7m77tuldmu4"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_4sepl"]
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_qk4jr"]
+[ext_resource type="Texture2D" uid="uid://qled2fwxn76e" path="res://Assets/Particles/light_04.png" id="3_y0utv"]
+[ext_resource type="Texture2D" uid="uid://bxsdkyqh5dg68" path="res://Assets/Particles/muzzle_01.png" id="4_3paq1"]
+[ext_resource type="Texture2D" uid="uid://db4i3cdljc5wm" path="res://Assets/Particles/smoke_01.png" id="4_um5ym"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5vgv3"]
+radius = 4.0
+
+[sub_resource type="Curve" id="Curve_053qm"]
+_data = [Vector2(0, 0.202847), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_l8x5h"]
+offsets = PackedFloat32Array(0, 0.150442, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Player" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_4sepl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5vgv3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_qk4jr")
+region_enabled = true
+region_rect = Rect2(48, 0, 8, 8)
+
+[node name="Propeller" type="Sprite2D" parent="."]
+texture = ExtResource("1_qk4jr")
+region_enabled = true
+region_rect = Rect2(56, 0, 8, 8)
+
+[node name="PropellerFlame" type="CPUParticles2D" parent="Propeller"]
+position = Vector2(-0.2, 0)
+emitting = false
+amount = 30
+lifetime = 0.2
+lifetime_randomness = 0.35
+texture = ExtResource("4_um5ym")
+direction = Vector2(0, 1)
+spread = 15.81
+gravity = Vector2(0, 0)
+initial_velocity_min = 54.05
+initial_velocity_max = 54.05
+orbit_velocity_min = -0.5
+orbit_velocity_max = 0.5
+angle_max = 720.0
+scale_amount_min = 0.01
+scale_amount_max = 0.03
+scale_amount_curve = SubResource("Curve_053qm")
+color = Color(0.639216, 1, 128.498, 1)
+color_ramp = SubResource("Gradient_l8x5h")
+
+[node name="Flashlight" type="PointLight2D" parent="Propeller"]
+rotation = 3.14159
+shadow_enabled = true
+texture = ExtResource("4_3paq1")
+offset = Vector2(0, -180)
+
+[node name="AuraLight" type="PointLight2D" parent="Propeller"]
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("3_y0utv")
+
+[node name="JumpCooldown" type="Timer" parent="."]
+one_shot = true
