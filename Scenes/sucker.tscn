@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbsc4lw25yhtl"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_7cnwu"]
+[ext_resource type="Script" path="res://Scripts/sucker.gd" id="1_acg1m"]
+[ext_resource type="Texture2D" uid="uid://dcnq78bmqh2dl" path="res://Assets/Particles/circle_01.png" id="3_7a1av"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ednw0"]
+radius = 50.0
+
+[sub_resource type="Curve" id="Curve_ui34q"]
+_data = [Vector2(0, 1), 0.0, 0.0585291, 0, 0, Vector2(0.72963, 0.558719), -2.19624, -2.19624, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_gofqd"]
+offsets = PackedFloat32Array(0, 0.221239, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Sucker" type="Area2D"]
+collision_mask = 6
+script = ExtResource("1_acg1m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ednw0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+color = Color(10, 10, 10, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_7cnwu")
+region_enabled = true
+region_rect = Rect2(64, 0, 8, 8)
+
+[node name="ActivationTimer" type="Timer" parent="."]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 1
+texture = ExtResource("3_7a1av")
+gravity = Vector2(0, 0)
+angle_max = 720.0
+scale_amount_min = 0.3
+scale_amount_max = 0.3
+scale_amount_curve = SubResource("Curve_ui34q")
+color = Color(1, 1, 100, 1)
+color_ramp = SubResource("Gradient_gofqd")

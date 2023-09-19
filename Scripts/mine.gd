@@ -2,8 +2,8 @@ extends Area2D
 
 
 var is_armed := true
-var knockback_force := 200.0
-var damage := 40.0
+var knockback_force := 120.0
+var damage := 200.0
 @onready var collision_shape :=$CollisionShape2D
 @onready var explosion_area := $ExplosionArea
 @onready var explosion_light := $ExplosionLight

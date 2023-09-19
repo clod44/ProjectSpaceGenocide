@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bi2msp4erewla"]
+
+[ext_resource type="Script" path="res://Scripts/Effects/trail.gd" id="1_75swb"]
+
+[sub_resource type="Curve" id="Curve_tvwik"]
+_data = [Vector2(0, 0.587189), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_5nirj"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[node name="Trail" type="Node"]
+script = ExtResource("1_75swb")
+trail_width_curve = SubResource("Curve_tvwik")
+trail_color = SubResource("Gradient_5nirj")
+delay = 0.01
+
+[node name="Line2D" type="Line2D" parent="."]
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="DisgartedTrails" type="Node" parent="."]

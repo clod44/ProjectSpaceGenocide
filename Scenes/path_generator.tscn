@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cucdmrsd52r5t"]
+
+[ext_resource type="Script" path="res://Scripts/path_generator.gd" id="1_jf0vc"]
+
+[node name="PathGenerator" type="Path2D"]
+script = ExtResource("1_jf0vc")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+loop = false

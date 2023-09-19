@@ -23,8 +23,8 @@ var current_zoom := 1.0
 ## zoom speed/smoothness
 @export var zoom_interpolation := 0.1
 @export_subgroup("Zooming")
-@export var max_zoom_out := 2.0
-@export var max_zoom_in := 5.0
+@export var max_zoom_out := 3.0
+@export var max_zoom_in := 4.0
 
 @export_subgroup("Camera Shake")
 var shake_amount := 1.0 #this represent the t of shaking 1 to 0 expoential decay. dont touch this

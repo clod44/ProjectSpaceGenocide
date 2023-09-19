@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://cx17gsp4peyx4"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_a3ip7"]
+[ext_resource type="Script" path="res://Scripts/saw.gd" id="1_u10jp"]
+[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="3_e75ta"]
+[ext_resource type="Texture2D" uid="uid://cb20lrvd6j7b2" path="res://Assets/Particles/trace_01.png" id="4_7h7s0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w0kmr"]
+
+[sub_resource type="Curve" id="Curve_al2k3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_mwlaq"]
+offsets = PackedFloat32Array(0, 0.141593, 0.814159, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.877551, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[node name="Saw" type="Area2D"]
+collision_mask = 6
+script = ExtResource("1_u10jp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w0kmr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_a3ip7")
+region_enabled = true
+region_rect = Rect2(80, 0, 24, 24)
+
+[node name="DisposableEffectGenerator" parent="." instance=ExtResource("3_e75ta")]
+effect_library = {
+"sparks": null
+}
+
+[node name="Sparks" type="CPUParticles2D" parent="DisposableEffectGenerator"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.84
+randomness = 0.34
+lifetime_randomness = 0.43
+texture = ExtResource("4_7h7s0")
+particle_flag_align_y = true
+spread = 41.35
+gravity = Vector2(0, 300)
+initial_velocity_min = 148.65
+initial_velocity_max = 229.73
+scale_amount_min = 0.02
+scale_amount_max = 0.05
+scale_amount_curve = SubResource("Curve_al2k3")
+color = Color(100, 1, 0.572549, 1)
+color_ramp = SubResource("Gradient_mwlaq")
