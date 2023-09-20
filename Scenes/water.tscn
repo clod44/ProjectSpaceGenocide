@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://dqs0em1rfs582"]
+
+[ext_resource type="Script" path="res://Scripts/water.gd" id="1_8ym4c"]
+[ext_resource type="Shader" path="res://Scenes/water.gdshader" id="1_10i6g"]
+[ext_resource type="Texture2D" uid="uid://bfqhylbhu0fuo" path="res://Assets/Textures/refraction_map.jpg" id="2_bwm6b"]
+[ext_resource type="Texture2D" uid="uid://di30xh5vaa0uv" path="res://Assets/Textures/refraction_map_3.png" id="3_ctdph"]
+[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="4_m4vgr"]
+[ext_resource type="Texture2D" uid="uid://ba6wticnnfouw" path="res://Assets/Particles/dirt_03.png" id="5_gl2qm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mdyiy"]
+shader = ExtResource("1_10i6g")
+shader_parameter/refraction_stretch = Vector2(1, 1)
+shader_parameter/refraction_strength = 0.02
+shader_parameter/water_tint = Color(0.0862745, 0.298039, 0.462745, 0.101961)
+shader_parameter/speed = 0.1
+shader_parameter/foam_speed = 0.1
+shader_parameter/foam_thickness = 0.01
+shader_parameter/refraction_map = ExtResource("3_ctdph")
+shader_parameter/foam_texture = ExtResource("2_bwm6b")
+
+[sub_resource type="Curve" id="Curve_ffspc"]
+_data = [Vector2(0, 0.516014), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_mgobh"]
+offsets = PackedFloat32Array(0, 0.159292, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Water" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_8ym4c")
+
+[node name="WaterEffect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_mdyiy")
+anchors_preset = -1
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DisposableEffectGenerator" parent="." instance=ExtResource("4_m4vgr")]
+effect_library = {
+"splash": null
+}
+
+[node name="Splash" type="CPUParticles2D" parent="DisposableEffectGenerator"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.84
+randomness = 0.41
+lifetime_randomness = 0.43
+texture = ExtResource("5_gl2qm")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 100)
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+angle_max = 720.0
+scale_amount_min = 0.01
+scale_amount_max = 0.02
+scale_amount_curve = SubResource("Curve_ffspc")
+color_ramp = SubResource("Gradient_mgobh")

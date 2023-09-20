@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="7_3nse1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ydrdn"]
-friction = 0.52
+friction = 0.48
 bounce = 0.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5vgv3"]
@@ -36,8 +36,10 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 collision_layer = 2
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_ydrdn")
+continuous_cd = 1
 max_contacts_reported = 3
 contact_monitor = true
+lock_rotation = true
 script = ExtResource("1_4sepl")
 
 [node name="Trail" parent="." instance=ExtResource("6_710vi")]

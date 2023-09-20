@@ -1,12 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://d03nt58oghhsh"]
 
-[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_begxr"]
 [ext_resource type="Script" path="res://Scripts/mine.gd" id="1_rvjqs"]
 [ext_resource type="Texture2D" uid="uid://dt1fhl3srqfcj" path="res://Assets/Particles/star_09.png" id="3_iyuj1"]
 [ext_resource type="Texture2D" uid="uid://4ifi3umd3ofu" path="res://Assets/Particles/smoke_07.png" id="4_xj84c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3k0je"]
 radius = 3.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uvhun"]
+load_path = "res://.godot/imported/tileset_1.png-d3178c7cbc2a84fb46e3168deeda691a.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b4dwa"]
 
@@ -20,8 +22,8 @@ _data = [Vector2(0, 0.231317), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_kv4rt"]
-offsets = PackedFloat32Array(0.159292, 0.20354, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0.0100903, 0.0100903, 0.0100903, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0.159292, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
 [node name="Mine" type="Area2D"]
 collision_mask = 7
@@ -34,9 +36,9 @@ debug_color = Color(0.698039, 0.278431, 1, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
-texture = ExtResource("1_begxr")
+texture = SubResource("CompressedTexture2D_uvhun")
 region_enabled = true
-region_rect = Rect2(64, 0, 8, 8)
+region_rect = Rect2(72, 0, 8, 8)
 
 [node name="ExplosionArea" type="Area2D" parent="."]
 collision_mask = 7
@@ -69,5 +71,4 @@ damping_curve = SubResource("Curve_eaqko")
 scale_amount_min = 0.01
 scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_qates")
-color = Color(100, 1, 0.584314, 1)
 color_ramp = SubResource("Gradient_kv4rt")

@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://heni2m3yyqjo"]
+
+[ext_resource type="Script" path="res://Scripts/platform.gd" id="1_0i2oa"]
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_ojctp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwltw"]
+friction = 0.4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qisw0"]
+size = Vector2(32, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7otqy"]
+polygon = PackedVector2Array(-14, -2, 14, -2, 14, 2, -14, 2)
+
+[node name="Platform" type="Marker2D"]
+script = ExtResource("1_0i2oa")
+
+[node name="Placeholder" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+texture = ExtResource("1_ojctp")
+region_enabled = true
+region_rect = Rect2(0, 24, 32, 8)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="PlatformPhysical" type="RigidBody2D" parent="Node"]
+collision_mask = 7
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_iwltw")
+gravity_scale = 0.0
+linear_damp = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/PlatformPhysical"]
+shape = SubResource("RectangleShape2D_qisw0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Node/PlatformPhysical"]
+texture = ExtResource("1_ojctp")
+region_enabled = true
+region_rect = Rect2(0, 24, 32, 8)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Node/PlatformPhysical"]
+occluder = SubResource("OccluderPolygon2D_7otqy")

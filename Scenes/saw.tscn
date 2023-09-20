@@ -12,8 +12,8 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2
 point_count = 3
 
 [sub_resource type="Gradient" id="Gradient_mwlaq"]
-offsets = PackedFloat32Array(0, 0.141593, 0.814159, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.877551, 1, 1, 1, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.106195, 0.814159, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
 [node name="Saw" type="Area2D"]
 collision_mask = 6
@@ -48,5 +48,5 @@ initial_velocity_max = 229.73
 scale_amount_min = 0.02
 scale_amount_max = 0.05
 scale_amount_curve = SubResource("Curve_al2k3")
-color = Color(100, 1, 0.572549, 1)
+color = Color(100, 0.588235, 0, 1)
 color_ramp = SubResource("Gradient_mwlaq")

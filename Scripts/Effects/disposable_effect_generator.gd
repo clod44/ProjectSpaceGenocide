@@ -17,7 +17,7 @@ func _ready():
 		effects[j].queue_free()
 	
 	
-func _process(delta):
+func _process(_delta):
 	for active_effect in active_effects.get_children():
 		if active_effect.emitting == false:
 			active_effect.queue_free()

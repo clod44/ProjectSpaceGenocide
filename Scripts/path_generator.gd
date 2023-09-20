@@ -1,16 +1,24 @@
 extends Path2D
 
-@export_multiline var warning := "add a child to this to make it move. child must not be effected by gravity or such"
+@export_multiline var warning := "add a child to this to make it move. child must not be effected by gravity or such. child must not queue_free itself"
 @onready var path_follow := $PathFollow2D
 @export var progression_speed := 0.3
 @export var loop_back := true
+@export var initial_progression := 0.0
 
 var node
 var going_forward_or_backwards := 1
 
 func _ready():
-	node = get_children()[1]
-
+	set_process(false)
+	set_physics_process(false)
+	if get_child_count() > 1:
+		node = get_children()[1]
+		path_follow.progress_ratio = initial_progression
+		set_process(true)
+		set_physics_process(true)
+	else:
+		print("no child found under path generator")
 
 func _process(_delta):
 	pass

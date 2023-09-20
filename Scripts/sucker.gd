@@ -6,6 +6,7 @@ extends Area2D
 @export var initial_activation_delay := 0.1
 @export var activation_delay := 3.0
 @onready var activation_timer := $ActivationTimer
+@export var work_non_stop := false
 var is_working := false : 
 	set(value):
 		var old_value = is_working
@@ -37,8 +38,9 @@ func _ready():
 	activation_timer.wait_time = activation_delay
 	await get_tree().create_timer(initial_activation_delay).timeout
 	is_working = true
-	activation_timer.autostart = true
-	activation_timer.start()
+	if !work_non_stop:
+		activation_timer.autostart = true
+		activation_timer.start()
 
 
 func _physics_process(delta):
