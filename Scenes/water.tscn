@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqs0em1rfs582"]
+[gd_scene load_steps=12 format=3 uid="uid://dqs0em1rfs582"]
 
 [ext_resource type="Script" path="res://Scripts/water.gd" id="1_8ym4c"]
 [ext_resource type="Shader" path="res://Scenes/water.gdshader" id="1_10i6g"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://di30xh5vaa0uv" path="res://Assets/Textures/refraction_map_3.png" id="3_ctdph"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="4_m4vgr"]
 [ext_resource type="Texture2D" uid="uid://ba6wticnnfouw" path="res://Assets/Particles/dirt_03.png" id="5_gl2qm"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="7_bykcy"]
+[ext_resource type="AudioStream" uid="uid://b3tx8siop8mxj" path="res://Assets/Sounds/water_1.mp3" id="8_tpq31"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mdyiy"]
 shader = ExtResource("1_10i6g")
@@ -54,3 +56,14 @@ scale_amount_min = 0.01
 scale_amount_max = 0.02
 scale_amount_curve = SubResource("Curve_ffspc")
 color_ramp = SubResource("Gradient_mgobh")
+
+[node name="SoundManager" parent="." instance=ExtResource("7_bykcy")]
+
+[node name="Splashes" type="Marker2D" parent="SoundManager"]
+
+[node name="Water_1" type="AudioStreamPlayer2D" parent="SoundManager/Splashes"]
+stream = ExtResource("8_tpq31")
+volume_db = -10.0
+max_distance = 250.0
+attenuation = 5.0
+max_polyphony = 3

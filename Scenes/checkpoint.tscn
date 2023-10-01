@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://s3b0jxjxe4dv"]
+
+[ext_resource type="Script" path="res://Scripts/checkpoint.gd" id="1_hsu2p"]
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_iwkur"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="4_ebu8n"]
+[ext_resource type="Texture2D" uid="uid://c2eyyb3nuuhdm" path="res://Assets/Particles/flare_01.png" id="4_yarey"]
+[ext_resource type="AudioStream" uid="uid://b6hbc6vjcvml4" path="res://Assets/Sounds/checkpoint_1.mp3" id="5_ljb1o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ly6jh"]
+radius = 5.09902
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gtl6l"]
+load_path = "res://.godot/imported/light_04.png-8a85cb7ff124e80edaeaa43786152bf2.ctex"
+
+[node name="Checkpoint" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_hsu2p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 3)
+shape = SubResource("CircleShape2D_ly6jh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_iwkur")
+region_enabled = true
+region_rect = Rect2(48, 32, 16, 16)
+
+[node name="Beep" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 7.0
+offset_bottom = 2.0
+color = Color(0.517647, 100, 0, 1)
+
+[node name="Flare" type="PointLight2D" parent="."]
+position = Vector2(6, 1)
+enabled = false
+color = Color(0.54902, 1, 0.117647, 1)
+energy = 16.0
+texture = ExtResource("4_yarey")
+offset = Vector2(0.5, 0.5)
+texture_scale = 0.5
+
+[node name="Aura" type="PointLight2D" parent="."]
+position = Vector2(6, 1)
+enabled = false
+texture = SubResource("CompressedTexture2D_gtl6l")
+offset = Vector2(0.5, 0.5)
+texture_scale = 0.5
+
+[node name="SoundManager" parent="." instance=ExtResource("4_ebu8n")]
+
+[node name="All" type="Marker2D" parent="SoundManager"]
+
+[node name="Checkpoint_1" type="AudioStreamPlayer2D" parent="SoundManager/All"]
+stream = ExtResource("5_ljb1o")
+max_distance = 500.0
+attenuation = 5.0

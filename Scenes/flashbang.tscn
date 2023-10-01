@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk1tjhu2is26h"]
+
+[ext_resource type="Texture2D" uid="uid://qled2fwxn76e" path="res://Assets/Particles/light_04.png" id="1_trvu1"]
+[ext_resource type="Script" path="res://Scripts/flashbang.gd" id="2_m2j2l"]
+
+[node name="Flashbang" type="PointLight2D"]
+enabled = false
+shadow_enabled = true
+texture = ExtResource("1_trvu1")
+script = ExtResource("2_m2j2l")

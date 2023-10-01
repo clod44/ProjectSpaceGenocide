@@ -6,13 +6,9 @@ var knockback_force := 150.0
 var damage := 200.0
 @onready var collision_shape :=$CollisionShape2D
 @onready var explosion_area := $ExplosionArea
-@onready var explosion_light := $ExplosionLight
-@onready var explosion_effect := $ExplosionEffect
-var explosion_light_tween
 @onready var sound_manager := $SoundManager
+@onready var disposable_effect_generator := $DisposableEffectGenerator
 func _ready():
-	explosion_light_tween = create_tween()
-	explosion_light_tween.kill()
 	connect("body_entered", on_body_enter)
 	
 
@@ -23,21 +19,14 @@ func _process(_delta):
 func on_body_enter(_body):
 	is_armed = false
 	Global.camera.shake(2.0, 4.0)
-	explosion_effect.emitting = true
 	$Sprite2D.visible = false
-	explosion_light.energy = 10.0
-	explosion_light.enabled = true
-	explosion_light_tween.kill()
-	explosion_light_tween = create_tween()
-	explosion_light_tween.tween_property(explosion_light,"energy", 0.0, 0.2)
-	explosion_light_tween.tween_callback(func():
-		explosion_light.enabled = false
-		)
-	for body in explosion_area.get_overlapping_bodies():
-		if "health" in body:
-			body.health -= damage
+	disposable_effect_generator.spawn_effect("ExplosionEffect", global_position, global_rotation)
+	disposable_effect_generator.spawn_effect("Flashbang", collision_shape.global_position, randf()*TAU)
+	for body in explosion_area.get_overlapping_bodies():	
 		if body is RigidBody2D:
 			body.apply_impulse(Vector2.from_angle(global_rotation - PI * 0.5) * knockback_force)
+		if "health" in body:
+			body.health -= damage
 	collision_shape.set_deferred("disabled", true)
 	sound_manager.play_from_group("Explosion", "Explosion_1", randf_range(0.6, 1.4))
 	

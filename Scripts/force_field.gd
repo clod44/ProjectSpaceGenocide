@@ -11,7 +11,6 @@ extends Area2D
 @export var work_non_stop := true
 var is_working := false : 
 	set(value):
-		var old_value = is_working
 		is_working = value
 var collision_shape_radius := 1.0
 

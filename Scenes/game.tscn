@@ -49,5 +49,4 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("5_6of5l")]
-position = Vector2(-659, -164)
 continuous_cd = 2

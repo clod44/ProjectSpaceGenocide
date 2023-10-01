@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://7x1iagp1wytr"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_1s481"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sgy5y"]
+friction = 0.7
+bounce = 0.27
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ai55q"]
+size = Vector2(8, 8)
+
+[node name="BoxSmall" type="RigidBody2D"]
+collision_mask = 7
+physics_material_override = SubResource("PhysicsMaterial_sgy5y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ai55q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_1s481")
+region_enabled = true
+region_rect = Rect2(64, 40, 8, 8)

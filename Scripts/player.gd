@@ -6,7 +6,7 @@ var health := 1000.0 :
 	set(value):
 		var old_value = health
 		health = value
-		if old_value != health:
+		if old_value > health:
 			take_damage()
 var roll_speed := 10000.0
 var move_speed := 20000.0
@@ -37,6 +37,7 @@ var collision_shape_radius := 1.0
 @onready var non_rotating_node := $NonRotatingNode
 @onready var collision_shape := $CollisionShape2D
 
+var spawn_position := Vector2.ZERO
 var is_dead := false :
 	set(value):
 		var old_value = is_dead
@@ -48,7 +49,13 @@ var is_dead := false :
 			
 			if is_dead:
 				Global.stop_level_time()
-				set_process(!is_dead)
+				if move_input != null:
+					move_input = 0
+					linear_velocity = Vector2.ZERO
+					global_rotation = 0
+					angular_velocity = 0
+			
+			set_process(!is_dead)
 
 @onready var sound_manager := $SoundManager
 
@@ -102,7 +109,17 @@ func take_damage():
 	sound_manager.play_random_from_group("Hits")
 	if health <= 0:	
 		Global.camera.shake(1.0, 5.0)
+		
 		disposable_effect_generator.spawn_effect("Explosion", global_position)
+		disposable_effect_generator.spawn_effect("Flashbang", global_position, randf() * TAU)
 		sound_manager.play_random_from_group("Explosions")
-		is_dead = true
+		respawn_at(spawn_position)
+		
 
+func respawn_at(pos = Vector2.ZERO):
+	is_dead = true
+	await get_tree().create_timer(1.0).timeout
+	health = max_health
+	global_position = pos
+	await get_tree().create_timer(1.0).timeout
+	is_dead = false

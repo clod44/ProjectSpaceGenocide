@@ -34,8 +34,6 @@ var knockback_force = 100.0
 @onready var shoot_cooldown_timer := $ShootCooldown
 var shoot_cooldown := 1.0
 @onready var shoot_effect := $Head/ShootEffect
-@onready var shoot_light := $Head/ShootLight
-var shoot_light_tween
 
 @onready var reach_test_ray := $AttackArea/ReachTestRay
 @onready var disposable_effect_generator := $DisposableEffectGenerator
@@ -54,8 +52,6 @@ func _ready():
 	head.global_rotation = starting_head_rotation
 	scan_light_tween = create_tween()
 	scan_light_tween.kill()
-	shoot_light_tween = create_tween()
-	shoot_light_tween.kill()
 	shoot_cooldown_timer.wait_time = shoot_cooldown
 	scan_timer.wait_time = scan_cooldown
 	scan_timer.connect("timeout", scan)
@@ -87,24 +83,17 @@ func shoot():
 	if shoot_cooldown_timer.is_stopped():
 		shoot_cooldown_timer.start()
 		
-		Global.camera.shake(5,1)
+		disposable_effect_generator.spawn_effect("Flashbang", global_position, head.global_rotation - PI * 0.5)
+		Global.camera.shake(2,3)
 		sound_manager.play_from_group("Misc", "GunShot_1", randf_range(0.9, 1.1))
 		shoot_effect.emitting = true
 		disposable_effect_generator.spawn_effect("Hit", shoot_ray.get_collision_point(), 0)
-		shoot_light.energy = 1.0
-		shoot_light.enabled = true
-		shoot_light_tween.kill()
-		shoot_light_tween = create_tween()
-		shoot_light_tween.tween_property(shoot_light,"energy", 0.0, 0.2)
-		shoot_light_tween.tween_callback(func():
-			shoot_light.enabled = false
-			)
 		var node = shoot_ray.get_collider()
 		if is_instance_valid(node) and "health" in node:
-			node.health -= damage
 			if node is RigidBody2D:
 				var knockback_vector = Vector2.from_angle(shoot_ray.global_rotation) * knockback_force
 				node.apply_impulse(knockback_vector)
+			node.health -= damage
 
 func look_towards(pos, delta):
 	var is_looking = false

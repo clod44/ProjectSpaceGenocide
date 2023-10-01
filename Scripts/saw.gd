@@ -23,12 +23,13 @@ func damage_surrounding():
 	for body in get_overlapping_bodies():
 		var collision_dir = (body.global_position - global_position).normalized()
 		var collision_point = global_position + (body.global_position - global_position)
-		if "health" in body:
-			body.health -= damage
-			disposable_effect_generator.spawn_effect("Sparks", collision_point, collision_dir.angle())
-			sound_manager.play_from_group("All", "Cutting")
 		if body is RigidBody2D:
 			var force_dir = (body.global_position - global_position).normalized()
 			body.apply_impulse(force_dir * knockback_force)
-			body.apply_torque_impulse(turn_speed * 10)
-		Global.camera.shake(1.0, 2.0)
+			body.apply_torque_impulse(turn_speed * 10)	
+			disposable_effect_generator.spawn_effect("Sparks", collision_point, collision_dir.angle())
+			sound_manager.play_from_group("All", "Cutting")
+		
+		if "health" in body:
+			body.health -= damage
+			Global.camera.shake(1.0, 2.0)

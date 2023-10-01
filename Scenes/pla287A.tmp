@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dg7m77tuldmu4"]
+[gd_scene load_steps=27 format=3 uid="uid://dg7m77tuldmu4"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_4sepl"]
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_qk4jr"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bi2msp4erewla" path="res://Scenes/Effects/trail.tscn" id="6_710vi"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="7_3nse1"]
 [ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="8_dbjkr"]
-[ext_resource type="PackedScene" uid="uid://bk1tjhu2is26h" path="res://Scenes/flashbang.tscn" id="8_jkh54"]
 [ext_resource type="AudioStream" uid="uid://bc2bntsjs0bql" path="res://Assets/Sounds/hit_1.mp3" id="9_bda4p"]
 [ext_resource type="AudioStream" uid="uid://dsl8m2n5ajfdm" path="res://Assets/Sounds/hit_2.mp3" id="10_wsbp2"]
 [ext_resource type="AudioStream" uid="uid://bcmnpmyt4l4f3" path="res://Assets/Sounds/hit_3.mp3" id="11_etcta"]
@@ -163,11 +162,6 @@ scale_amount_min = 0.02
 scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_8cayv")
 color_ramp = SubResource("Gradient_7rci0")
-
-[node name="Flashbang" parent="DisposableEffectGenerator" instance=ExtResource("8_jkh54")]
-energy = 16.0
-texture_scale = 0.7
-duration = 0.2
 
 [node name="NonRotatingNode" type="Marker2D" parent="."]
 

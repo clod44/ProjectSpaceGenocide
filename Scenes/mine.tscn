@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://d03nt58oghhsh"]
+[gd_scene load_steps=13 format=3 uid="uid://d03nt58oghhsh"]
 
 [ext_resource type="Script" path="res://Scripts/mine.gd" id="1_rvjqs"]
-[ext_resource type="Texture2D" uid="uid://dt1fhl3srqfcj" path="res://Assets/Particles/star_09.png" id="3_iyuj1"]
+[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="4_1n6id"]
 [ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="4_dj82y"]
 [ext_resource type="Texture2D" uid="uid://4ifi3umd3ofu" path="res://Assets/Particles/smoke_07.png" id="4_xj84c"]
 [ext_resource type="AudioStream" uid="uid://c2rtavngt4rcw" path="res://Assets/Sounds/explosion_1.mp3" id="5_f7qst"]
+[ext_resource type="PackedScene" uid="uid://bk1tjhu2is26h" path="res://Scenes/flashbang.tscn" id="6_6gw53"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3k0je"]
 radius = 3.0
@@ -50,13 +51,18 @@ position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_b4dwa")
 metadata/_edit_lock_ = true
 
-[node name="ExplosionLight" type="PointLight2D" parent="."]
-position = Vector2(0, -1)
-enabled = false
-shadow_enabled = true
-texture = ExtResource("3_iyuj1")
+[node name="SoundManager" parent="." instance=ExtResource("4_dj82y")]
 
-[node name="ExplosionEffect" type="CPUParticles2D" parent="."]
+[node name="Explosion" type="Marker2D" parent="SoundManager"]
+
+[node name="Explosion_1" type="AudioStreamPlayer2D" parent="SoundManager/Explosion"]
+stream = ExtResource("5_f7qst")
+max_distance = 500.0
+attenuation = 5.0
+
+[node name="DisposableEffectGenerator" parent="." instance=ExtResource("4_1n6id")]
+
+[node name="ExplosionEffect" type="CPUParticles2D" parent="DisposableEffectGenerator"]
 emitting = false
 amount = 24
 one_shot = true
@@ -75,11 +81,8 @@ scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_qates")
 color_ramp = SubResource("Gradient_kv4rt")
 
-[node name="SoundManager" parent="." instance=ExtResource("4_dj82y")]
-
-[node name="Explosion" type="Marker2D" parent="SoundManager"]
-
-[node name="Explosion_1" type="AudioStreamPlayer2D" parent="SoundManager/Explosion"]
-stream = ExtResource("5_f7qst")
-max_distance = 500.0
-attenuation = 5.0
+[node name="Flashbang" parent="DisposableEffectGenerator" instance=ExtResource("6_6gw53")]
+energy = 16.0
+texture = ExtResource("4_xj84c")
+texture_scale = 0.5
+duration = 0.2

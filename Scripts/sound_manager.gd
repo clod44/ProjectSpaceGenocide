@@ -12,8 +12,10 @@ func _process(_delta):
 	pass
 
 
-func play_random_from_group(group_name = null):
-	sound_groups[group_name].get_children().pick_random().play()
+func play_random_from_group(group_name = null, custom_pitch = 1.0):
+	var audio_player = sound_groups[group_name].get_children().pick_random()
+	audio_player.pitch_scale = custom_pitch
+	audio_player.play()
 
 func play_from_group(group_name = null, sound_name = null, custom_pitch = 1.0, force_start = true):
 	for audio_player in sound_groups[group_name].get_children():
