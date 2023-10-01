@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_ojctp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_iwltw"]
-friction = 0.4
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qisw0"]
 size = Vector2(32, 8)

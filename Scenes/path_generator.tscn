@@ -1,9 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cucdmrsd52r5t"]
+[gd_scene load_steps=4 format=3 uid="uid://cucdmrsd52r5t"]
 
 [ext_resource type="Script" path="res://Scripts/path_generator.gd" id="1_jf0vc"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="2_jv4ja"]
+[ext_resource type="AudioStream" uid="uid://x6n08eo6bwd6" path="res://Assets/Sounds/ambient_1.mp3" id="3_4lgq0"]
 
 [node name="PathGenerator" type="Path2D"]
 script = ExtResource("1_jf0vc")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 loop = false
+
+[node name="SoundManager" parent="PathFollow2D" instance=ExtResource("2_jv4ja")]
+
+[node name="Ambient" type="Marker2D" parent="PathFollow2D/SoundManager"]
+
+[node name="Ambient_1" type="AudioStreamPlayer2D" parent="PathFollow2D/SoundManager/Ambient"]
+stream = ExtResource("3_4lgq0")
+volume_db = -10.0
+max_distance = 300.0
+attenuation = 5.0

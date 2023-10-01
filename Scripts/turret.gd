@@ -8,7 +8,7 @@ var health := 100.0 :
 		health = value
 		if old_value != health:
 			take_damage()
-var damage = 10.0
+var damage = 300.0
 @onready var head := $Head
 @onready var scan_timer := $ScanTimer
 var scan_cooldown := 1.0
@@ -18,6 +18,7 @@ var scan_light_tween
 var head_turn_speed := 20.0
 var head_turn_damping := 0.9
 var head_angular_vel := 0.0
+var aim_error_margin := 20.0
 @onready var attack_area := $AttackArea
 @onready var laser_light := $Head/Laser
 var target = null :
@@ -38,8 +39,14 @@ var shoot_light_tween
 
 @onready var reach_test_ray := $AttackArea/ReachTestRay
 @onready var disposable_effect_generator := $DisposableEffectGenerator
+@onready var sound_manager := $SoundManager
+var scanning_sound_pitch := 1.0
+var moving_sound_pitch := 1.0
+
+
 func _ready():
-	
+	scanning_sound_pitch = randf_range(0.7, 1.3)
+	moving_sound_pitch = randf_range(0.9, 1.1)
 	# trigger the laser energy level
 	target = self
 	target = null
@@ -58,6 +65,15 @@ func _ready():
 	scan_timer.start()
 
 
+func _process(_delta):
+	if abs(head_angular_vel) > 30:
+		sound_manager.play_from_group("Process", "Move_1", moving_sound_pitch, false)
+	else:
+		sound_manager.stop_from_group("Process", "Move_1")
+		
+
+
+
 func _physics_process(delta):
 	if is_instance_valid(target):
 		var is_looking = look_towards(target.global_position, delta)
@@ -72,8 +88,9 @@ func shoot():
 		shoot_cooldown_timer.start()
 		
 		Global.camera.shake(5,1)
+		sound_manager.play_from_group("Misc", "GunShot_1", randf_range(0.9, 1.1))
 		shoot_effect.emitting = true
-		disposable_effect_generator.spawn_effect("hit", shoot_ray.get_collision_point(), 0)
+		disposable_effect_generator.spawn_effect("Hit", shoot_ray.get_collision_point(), 0)
 		shoot_light.energy = 1.0
 		shoot_light.enabled = true
 		shoot_light_tween.kill()
@@ -111,18 +128,17 @@ func look_towards(pos, delta):
 			angle_difference += 360.0
 
 		# Check if the angle difference is within the specified error margin
-		var error_margin := 30.0
-		is_looking = abs(angle_difference) <= error_margin
+		is_looking = abs(angle_difference) <= aim_error_margin
 		
 		# Calculate the angular velocity based on the angle difference
 		head_angular_vel += clamp(angle_difference, -1.0, 1.0) * head_turn_speed
 	head.global_rotation_degrees += head_angular_vel * delta
 	head_angular_vel *= head_turn_damping
-
+	
 	return is_looking
 
 func scan():
-	
+	sound_manager.play_from_group("Misc", "Beep", scanning_sound_pitch)
 	target = null
 	for body in attack_area.get_overlapping_bodies():
 		if "health" in body:

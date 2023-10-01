@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8u1vnq4uv35d"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_f0jm1"]
+[ext_resource type="Texture2D" uid="uid://qled2fwxn76e" path="res://Assets/Particles/light_04.png" id="2_cvim5"]
+[ext_resource type="Script" path="res://Scripts/lamp_small.gd" id="2_dreru"]
+
+[node name="LampSmall" type="PointLight2D"]
+energy = 2.0
+texture = ExtResource("2_cvim5")
+texture_scale = 0.5
+script = ExtResource("2_dreru")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_f0jm1")
+region_enabled = true
+region_rect = Rect2(56, 24, 8, 8)

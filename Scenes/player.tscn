@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dg7m77tuldmu4"]
+[gd_scene load_steps=27 format=3 uid="uid://dg7m77tuldmu4"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_4sepl"]
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_qk4jr"]
@@ -7,10 +7,17 @@
 [ext_resource type="Texture2D" uid="uid://db4i3cdljc5wm" path="res://Assets/Particles/smoke_01.png" id="4_um5ym"]
 [ext_resource type="PackedScene" uid="uid://bi2msp4erewla" path="res://Scenes/Effects/trail.tscn" id="6_710vi"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="7_3nse1"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="8_dbjkr"]
+[ext_resource type="AudioStream" uid="uid://bc2bntsjs0bql" path="res://Assets/Sounds/hit_1.mp3" id="9_bda4p"]
+[ext_resource type="AudioStream" uid="uid://dsl8m2n5ajfdm" path="res://Assets/Sounds/hit_2.mp3" id="10_wsbp2"]
+[ext_resource type="AudioStream" uid="uid://bcmnpmyt4l4f3" path="res://Assets/Sounds/hit_3.mp3" id="11_etcta"]
+[ext_resource type="AudioStream" uid="uid://cokhi5ji76lp2" path="res://Assets/Sounds/hit_4.mp3" id="12_68tg7"]
+[ext_resource type="AudioStream" uid="uid://wo2jgwejn2iv" path="res://Assets/Sounds/hit_5.mp3" id="13_f200s"]
+[ext_resource type="AudioStream" uid="uid://8midpj5oadjt" path="res://Assets/Sounds/hit_6.mp3" id="14_7ysdl"]
+[ext_resource type="AudioStream" uid="uid://343a45d1ac4l" path="res://Assets/Sounds/explosion_2.mp3" id="15_elxnd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ydrdn"]
-friction = 0.48
-bounce = 0.4
+friction = 0.21
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5vgv3"]
 radius = 4.0
@@ -32,14 +39,36 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.079646, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_icnjc"]
+load_path = "res://.godot/imported/smoke_01.png-5e16f3e9b5cf7eb0041fc832960a92ef.ctex"
+
+[sub_resource type="Curve" id="Curve_n3g3n"]
+max_value = 10.0
+_data = [Vector2(0, 7.01068), 0.0, 0.0, 0, 0, Vector2(0.359259, 0.320285), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_8cayv"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0851852, 1.4306), 0.0, 0.0, 0, 0, Vector2(1, 2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_7rci0"]
+offsets = PackedFloat32Array(0, 0.079646, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2021y"]
+radius = 3.0
+
 [node name="Player" type="RigidBody2D"]
 collision_layer = 2
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_ydrdn")
+gravity_scale = 1.5
 continuous_cd = 1
 max_contacts_reported = 3
 contact_monitor = true
-lock_rotation = true
+linear_damp = 2.0
+angular_damp = 2.0
 script = ExtResource("1_4sepl")
 
 [node name="Trail" parent="." instance=ExtResource("6_710vi")]
@@ -88,7 +117,7 @@ texture = ExtResource("4_3paq1")
 offset = Vector2(0, -180)
 
 [node name="AuraLight" type="PointLight2D" parent="Propeller"]
-energy = 0.5
+energy = 0.2
 shadow_enabled = true
 texture = ExtResource("3_y0utv")
 
@@ -96,9 +125,6 @@ texture = ExtResource("3_y0utv")
 one_shot = true
 
 [node name="DisposableEffectGenerator" parent="." instance=ExtResource("7_3nse1")]
-effect_library = {
-"smoke": null
-}
 
 [node name="Smoke" type="CPUParticles2D" parent="DisposableEffectGenerator"]
 emitting = false
@@ -116,3 +142,62 @@ scale_amount_min = 0.02
 scale_amount_max = 0.04
 scale_amount_curve = SubResource("Curve_2qgv7")
 color_ramp = SubResource("Gradient_1lad5")
+
+[node name="Explosion" type="CPUParticles2D" parent="DisposableEffectGenerator"]
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 1.0
+randomness = 0.36
+lifetime_randomness = 0.39
+texture = SubResource("CompressedTexture2D_icnjc")
+spread = 180.0
+gravity = Vector2(0, 10)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+damping_min = 100.0
+damping_max = 100.0
+damping_curve = SubResource("Curve_n3g3n")
+scale_amount_min = 0.02
+scale_amount_max = 0.1
+scale_amount_curve = SubResource("Curve_8cayv")
+color_ramp = SubResource("Gradient_7rci0")
+
+[node name="NonRotatingNode" type="Marker2D" parent="."]
+
+[node name="JumpCheckArea" type="Area2D" parent="NonRotatingNode"]
+position = Vector2(0, 4)
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NonRotatingNode/JumpCheckArea"]
+shape = SubResource("CircleShape2D_2021y")
+
+[node name="SoundManager" parent="." instance=ExtResource("8_dbjkr")]
+
+[node name="Hits" type="Marker2D" parent="SoundManager"]
+
+[node name="Hit1" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("9_bda4p")
+
+[node name="Hit2" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("10_wsbp2")
+
+[node name="Hit3" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("11_etcta")
+
+[node name="Hit4" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("12_68tg7")
+
+[node name="Hit5" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("13_f200s")
+
+[node name="Hit6" type="AudioStreamPlayer2D" parent="SoundManager/Hits"]
+stream = ExtResource("14_7ysdl")
+
+[node name="Explosions" type="Marker2D" parent="SoundManager"]
+
+[node name="Explosion_2" type="AudioStreamPlayer2D" parent="SoundManager/Explosions"]
+stream = ExtResource("15_elxnd")
+max_distance = 500.0
+attenuation = 5.0

@@ -25,7 +25,7 @@ func _on_body_entered(body):
 	if body is RigidBody2D:
 		var rigidbody = body
 
-		disposable_effect_generator.spawn_effect("splash", rigidbody.global_position)
+		disposable_effect_generator.spawn_effect("Splash", rigidbody.global_position)
 		
 		# Store the original properties in the dictionary
 		bodies_in_water[rigidbody] = {

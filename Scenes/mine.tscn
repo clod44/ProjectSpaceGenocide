@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://d03nt58oghhsh"]
+[gd_scene load_steps=12 format=3 uid="uid://d03nt58oghhsh"]
 
 [ext_resource type="Script" path="res://Scripts/mine.gd" id="1_rvjqs"]
 [ext_resource type="Texture2D" uid="uid://dt1fhl3srqfcj" path="res://Assets/Particles/star_09.png" id="3_iyuj1"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="4_dj82y"]
 [ext_resource type="Texture2D" uid="uid://4ifi3umd3ofu" path="res://Assets/Particles/smoke_07.png" id="4_xj84c"]
+[ext_resource type="AudioStream" uid="uid://c2rtavngt4rcw" path="res://Assets/Sounds/explosion_1.mp3" id="5_f7qst"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3k0je"]
 radius = 3.0
@@ -72,3 +74,12 @@ scale_amount_min = 0.01
 scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_qates")
 color_ramp = SubResource("Gradient_kv4rt")
+
+[node name="SoundManager" parent="." instance=ExtResource("4_dj82y")]
+
+[node name="Explosion" type="Marker2D" parent="SoundManager"]
+
+[node name="Explosion_1" type="AudioStreamPlayer2D" parent="SoundManager/Explosion"]
+stream = ExtResource("5_f7qst")
+max_distance = 500.0
+attenuation = 5.0

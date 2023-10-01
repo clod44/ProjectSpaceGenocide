@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cx17gsp4peyx4"]
+[gd_scene load_steps=11 format=3 uid="uid://cx17gsp4peyx4"]
 
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_a3ip7"]
 [ext_resource type="Script" path="res://Scripts/saw.gd" id="1_u10jp"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="3_e75ta"]
 [ext_resource type="Texture2D" uid="uid://cb20lrvd6j7b2" path="res://Assets/Particles/trace_01.png" id="4_7h7s0"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="5_e1y51"]
+[ext_resource type="AudioStream" uid="uid://2nl3wvf5vk7v" path="res://Assets/Sounds/saw_1.mp3" id="6_lqc51"]
+[ext_resource type="AudioStream" uid="uid://dxkababgyipfn" path="res://Assets/Sounds/cutting_1.mp3" id="6_t6ql3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w0kmr"]
 
@@ -28,9 +31,6 @@ region_enabled = true
 region_rect = Rect2(80, 0, 24, 24)
 
 [node name="DisposableEffectGenerator" parent="." instance=ExtResource("3_e75ta")]
-effect_library = {
-"sparks": null
-}
 
 [node name="Sparks" type="CPUParticles2D" parent="DisposableEffectGenerator"]
 emitting = false
@@ -50,3 +50,20 @@ scale_amount_max = 0.05
 scale_amount_curve = SubResource("Curve_al2k3")
 color = Color(100, 0.588235, 0, 1)
 color_ramp = SubResource("Gradient_mwlaq")
+
+[node name="SoundManager" parent="." instance=ExtResource("5_e1y51")]
+
+[node name="All" type="Marker2D" parent="SoundManager"]
+
+[node name="Idle" type="AudioStreamPlayer2D" parent="SoundManager/All"]
+stream = ExtResource("6_lqc51")
+volume_db = -10.0
+max_distance = 300.0
+attenuation = 5.0
+
+[node name="Cutting" type="AudioStreamPlayer2D" parent="SoundManager/All"]
+stream = ExtResource("6_t6ql3")
+volume_db = -10.0
+max_distance = 300.0
+attenuation = 5.0
+max_polyphony = 2

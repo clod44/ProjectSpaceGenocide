@@ -1,20 +1,19 @@
 extends Area2D
 
-@export var force = 20000.0
+
+
+@export var force = -20000.0
 
 ## this is here to create fancy visuals with offsetted pushing pulling effects
 @export var initial_activation_delay := 0.1
 @export var activation_delay := 3.0
 @onready var activation_timer := $ActivationTimer
-@export var work_non_stop := false
+@export var work_non_stop := true
 var is_working := false : 
 	set(value):
 		var old_value = is_working
 		is_working = value
-		if old_value != is_working and cpu_effect != null:
-			cpu_effect.emitting = is_working
 var collision_shape_radius := 1.0
-@onready var cpu_effect := $CPUParticles2D
 
 @onready var color_rect := $ColorRect
 var color_rect_tween
@@ -28,6 +27,10 @@ var found_target := false :
 				color_rect_tween = create_tween()
 				color_rect.modulate = Color(1,1,1,1)
 				color_rect_tween.tween_property(color_rect, "modulate", Color(1,1,1,0), 1.0)
+
+
+@onready var sound_manager := $SoundManager
+@onready var disposable_effect_generator := $DisposableEffectGenerator
 func _ready():
 	color_rect_tween = create_tween()
 	color_rect_tween.kill()
@@ -43,7 +46,14 @@ func _ready():
 		activation_timer.start()
 
 
+var t = 0.0
 func _physics_process(delta):
+	t += delta
+	if t > 1.0 and is_working:
+		var cpu_effect_name = "AuraIn" if force >= 0 else "AuraOut"
+		disposable_effect_generator.spawn_effect(cpu_effect_name, global_position)
+		sound_manager.play_from_group("All", "Forcefield_1")
+		t -= 1.0
 	found_target = false
 	if is_working:
 		for body in get_overlapping_bodies():

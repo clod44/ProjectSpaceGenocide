@@ -1,20 +1,23 @@
 extends RigidBody2D
 
-var health := 100000.0 :
+
+var max_health := 1000.0
+var health := 1000.0 :
 	set(value):
 		var old_value = health
 		health = value
 		if old_value != health:
 			take_damage()
-var roll_speed := 20000.0
-var move_speed := 10000.0
-var propelling_force := 20000.0
-var propeller_fuel_max := 2.0
-var propeller_fuel := 2.0
-var propeller_per_sec := 0.5
-var jump_force := 100.0
+var roll_speed := 10000.0
+var move_speed := 20000.0
+var propelling_force := 40000.0
+var propeller_fuel_max := 1.0
+var propeller_fuel := 1.0
+var propeller_refill_amount := 0.1
+var propeller_usage_amount := 2.0
+var jump_force := 150.0
 @onready var jump_cooldown_timer := $JumpCooldown
-var jump_cooldown := 0.5
+var jump_cooldown := 0.01
 
 @onready var propeller := $Propeller
 @onready var propeller_flame := $Propeller/PropellerFlame
@@ -29,9 +32,29 @@ var move_input := 0.0
 @onready var trail := $Trail
 @onready var disposable_effect_generator := $DisposableEffectGenerator
 var collision_shape_radius := 1.0
+
+@onready var jump_check_area := $NonRotatingNode/JumpCheckArea
+@onready var non_rotating_node := $NonRotatingNode
+@onready var collision_shape := $CollisionShape2D
+
+var is_dead := false :
+	set(value):
+		var old_value = is_dead
+		is_dead = value
+		if old_value != is_dead:
+			visible = !is_dead
+			set_deferred("freeze", is_dead)
+			collision_shape.set_deferred("disabled", is_dead)
+			
+			if is_dead:
+				Global.stop_level_time()
+				set_process(!is_dead)
+
+@onready var sound_manager := $SoundManager
+
 func _ready():
 	Global.player = self
-	collision_shape_radius = $CollisionShape2D.shape.radius
+	collision_shape_radius = collision_shape.shape.radius
 	
 func _process(_delta):
 	move_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -48,8 +71,9 @@ func _process(_delta):
 	propeller.global_rotation_degrees = (angle * 180.0 / PI) + 270.0
 	
 	is_propelling = Input.is_action_pressed("propell")
-	if jump_cooldown_timer.is_stopped() and Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump") and jump_check_area.get_overlapping_bodies().size() > 0:
 		jump_cooldown_timer.start()
+		sound_manager.play_random_from_group("Hits")
 		apply_impulse(Vector2.UP * jump_force)
 	
 	trail.modulate_color.a = clamp(remap(linear_velocity.length(), 0, 1000, 0, 1), 0, 1)
@@ -59,20 +83,26 @@ func _physics_process(delta):
 	apply_torque(move_input * roll_speed * delta)
 	apply_force(Vector2(move_input * move_speed, 0.0) * delta)
 	if is_propelling and propeller_fuel -2.0 * delta >= 0.0:
-		propeller_fuel -= 2.0 * delta
+		propeller_fuel -= propeller_usage_amount * delta
 		apply_force(Vector2.UP.rotated(propeller.global_rotation) * propelling_force * delta)
-	propeller_fuel = min(propeller_fuel + propeller_per_sec * delta, propeller_fuel_max)
+	else:
+		propeller_fuel = min(propeller_fuel + propeller_refill_amount * delta, propeller_fuel_max)
 	
 	var lin_vel = linear_velocity
 	var lin_vel_length = lin_vel.length()
 	if abs(lin_vel_length - prev_lin_vel_length) > 35.0:
 		var collision_point = global_position + lin_vel.normalized() * -collision_shape_radius
 		var effect_angle = (collision_point - global_position).angle() + PI
-		disposable_effect_generator.spawn_effect("smoke", collision_point, effect_angle)
+		disposable_effect_generator.spawn_effect("Smoke", collision_point, effect_angle)
 	prev_lin_vel_length = lin_vel_length
+	
+	non_rotating_node.global_rotation = 0.0 
 
 func take_damage():
-	print("ouch!")
-	if health <= 0:
-		queue_free()
+	sound_manager.play_random_from_group("Hits")
+	if health <= 0:	
+		Global.camera.shake(1.0, 5.0)
+		disposable_effect_generator.spawn_effect("Explosion", global_position)
+		sound_manager.play_random_from_group("Explosions")
+		is_dead = true
 

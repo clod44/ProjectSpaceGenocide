@@ -15,6 +15,7 @@ uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
 varying vec2 globalposition;
 void vertex(){
+	
 	globalposition = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
 }
 

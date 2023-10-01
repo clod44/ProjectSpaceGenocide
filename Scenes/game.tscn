@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dndbeyjc6vdfr"]
+[gd_scene load_steps=8 format=3 uid="uid://dndbeyjc6vdfr"]
 
-[ext_resource type="Texture2D" uid="uid://5d2s8utgpyj1" path="res://Assets/Textures/dummy_bg_1.png" id="1_q2bsr"]
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_1t4ao"]
 [ext_resource type="PackedScene" uid="uid://cmrhtgypdx0m0" path="res://Scenes/camera.tscn" id="2_vorqq"]
-[ext_resource type="PackedScene" uid="uid://dyhnk827h20m6" path="res://Scenes/Levels/level_1.tscn" id="4_2ebah"]
 [ext_resource type="PackedScene" uid="uid://dg7m77tuldmu4" path="res://Scenes/player.tscn" id="5_6of5l"]
-[ext_resource type="PackedScene" uid="uid://dqs0em1rfs582" path="res://Scenes/water.tscn" id="5_w7yj5"]
+[ext_resource type="PackedScene" uid="uid://biaav5w6xubi8" path="res://Scenes/hud.tscn" id="6_rayk5"]
 
 [sub_resource type="Gradient" id="Gradient_862ym"]
 offsets = PackedFloat32Array(0, 0.534653, 1)
@@ -15,53 +14,40 @@ gradient = SubResource("Gradient_862ym")
 
 [sub_resource type="Environment" id="Environment_uw8ja"]
 background_mode = 3
+background_canvas_max_layer = 1
 tonemap_mode = 2
 tonemap_exposure = 1.22
 tonemap_white = 16.0
 glow_enabled = true
 glow_normalized = true
-glow_intensity = 8.0
-glow_strength = 1.3
+glow_intensity = 0.37
+glow_strength = 1.14
 glow_mix = 0.064
-glow_bloom = 0.03
-glow_blend_mode = 1
+glow_bloom = 0.18
+glow_blend_mode = 0
 volumetric_fog_density = 1.0
 volumetric_fog_emission = Color(0.415686, 0.415686, 0.415686, 1)
 adjustment_enabled = true
 adjustment_color_correction = SubResource("GradientTexture1D_ultgj")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4x28r"]
-size = Vector2(97, 37.5)
-
 [node name="Game" type="Node2D"]
+script = ExtResource("1_1t4ao")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_uw8ja")
+
+[node name="HUD" parent="." instance=ExtResource("6_rayk5")]
 
 [node name="Darkness" type="CanvasModulate" parent="."]
 color = Color(0.00392157, 0.00392157, 0.00392157, 1)
 metadata/_edit_lock_ = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_uw8ja")
-
-[node name="Background" type="Sprite2D" parent="."]
-modulate = Color(0.290196, 0.290196, 0.290196, 1)
-position = Vector2(10, -246)
-scale = Vector2(10, 10)
-texture = ExtResource("1_q2bsr")
-metadata/_edit_lock_ = true
-
-[node name="Level_1" parent="." instance=ExtResource("4_2ebah")]
-
 [node name="Camera" parent="." instance=ExtResource("2_vorqq")]
 metadata/_edit_lock_ = true
 
+[node name="Level" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
 [node name="Player" parent="." instance=ExtResource("5_6of5l")]
-position = Vector2(39, -133)
+position = Vector2(-659, -164)
 continuous_cd = 2
-
-[node name="Waters" type="Node2D" parent="."]
-
-[node name="Water" parent="Waters" instance=ExtResource("5_w7yj5")]
-position = Vector2(264, -144)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Waters/Water"]
-shape = SubResource("RectangleShape2D_4x28r")

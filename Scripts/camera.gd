@@ -35,11 +35,18 @@ var default_offset = offset
 var shaking = false
 
 
+var dangle_vel = Vector2.ZERO
+var dangle_pos = Vector2.ONE
+var dangle_speed = 100.0
+var dangle_damping = 0.01
+var dangle_factor = 0.1
+
+@onready var red_screen := $RedScreen
 func _ready():
 	#see https://www.youtube.com/watch?v=4mll7LKIITM for camera shaking stuff and global accessing
 	Global.camera = self
 	randomize() #randomize RNG seed
-	
+
 	# have to stop it manually after creation otherwise Godot complains
 	tween.kill()
 	
@@ -50,6 +57,7 @@ func _ready():
 		target_pos = Vector2.ZERO
 	global_position = target_pos
 	
+	timer.connect("timeout", _on_timer_timeout)
 	Global.connect("player_updated", on_player_update)
 
 func on_player_update():
@@ -61,6 +69,16 @@ func _physics_process(delta):
 		if follow_ahead:
 			var follow_ahead_offset = follow_node.velocity * follow_ahead_factor
 			target_pos += follow_ahead_offset.limit_length(follow_ahead_max_dist)
+		if "health" in follow_node and "max_health" in follow_node:
+			red_screen.energy = lerp(
+				red_screen.energy,
+				remap(follow_node.health, 0.0, follow_node.max_health, 1.0, 0.0),
+				0.1)
+			dangle_factor =  (1.0 - follow_node.health / follow_node.max_health) *0.1
+		else:
+			red_screen.energy = lerp(red_screen.energy, 0.0, 0.01)
+			dangle_factor = 0.0
+	
 	var smoothed_pos = global_position.lerp(target_pos, smoothing_speed * delta * 60)
 	global_position = smoothed_pos + get_local_mouse_position() * mouse_offset_factor 
 	
@@ -73,14 +91,31 @@ func _physics_process(delta):
 	current_zoom = lerp(current_zoom, desired_zoom, zoom_interpolation * delta * 60)
 	zoom = Vector2(current_zoom, current_zoom)
 	
+	var shake_offset = Vector2.ZERO
 	if shaking:
-		offset = Vector2(randf_range(-1, 1) * shake_strength * shake_amount, randf_range(-1, 1) * shake_strength * shake_amount)
-		shake_amount *= max(shake_amount - 0.01, 0)
-
+		shake_offset = Vector2(
+			randf_range(-1, 1), 
+			randf_range(-1, 1)
+			).normalized() * shake_strength * shake_amount
+		shake_amount *= max(timer.time_left / timer.wait_time, 0)
+	
+	dangle_vel = Vector2(
+			randf_range(-1, 1), 
+			randf_range(-1, 1)
+			).normalized()
+	dangle_pos += dangle_vel * dangle_speed * delta
+	dangle_pos = lerp(dangle_pos, Vector2.ZERO, dangle_damping)
+		
+	#shaking
+	offset +=shake_offset
+	#dangling	
+	offset = lerp(offset, offset + dangle_pos, dangle_factor)
+	#return back force
+	offset = lerp(offset, Vector2.ZERO, 0.1)
 
 func shake(time, _shake_strength):
 	timer.wait_time = time
-	shake_amount = 1 #reset exponential decay
+	shake_amount = 1 #reset linear decay
 	shake_strength = _shake_strength
 	shaking = true
 	timer.start()
@@ -88,8 +123,3 @@ func shake(time, _shake_strength):
 
 func _on_timer_timeout():
 	shaking = false
-	
-	# have to stop it manually after creation otherwise Godot complains
-	tween.kill()
-	tween = create_tween()
-	tween.tween_property(self, "offset", default_offset, 2.0)

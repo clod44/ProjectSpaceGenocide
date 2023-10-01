@@ -32,14 +32,10 @@ script = ExtResource("1_8ym4c")
 
 [node name="WaterEffect" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_mdyiy")
-anchors_preset = -1
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DisposableEffectGenerator" parent="." instance=ExtResource("4_m4vgr")]
-effect_library = {
-"splash": null
-}
 
 [node name="Splash" type="CPUParticles2D" parent="DisposableEffectGenerator"]
 emitting = false

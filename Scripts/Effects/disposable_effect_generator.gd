@@ -1,20 +1,16 @@
 extends Marker2D
 
-@export_multiline var warning := "put your cpu/gpu effect as a child to this node. if they have direction, make them move towards right. effect will queue_free when it stops emitting. add effect names to the effect_library. leave the value section null"
-@export var effect_library = {
-	"default_name" : null
-}
+@export_multiline var warning := "put your cpu/gpu effect as a child to this node"
+var effect_library = {}
 @onready var active_effects := $ActiveEffects
 func _ready():
-	var effects = get_children()
-	var i = 1
-	for effect_name in effect_library.keys():
-		effect_library[effect_name] = effects[i].duplicate()
+	for effect in get_children():
+		effect_library[effect.name] = effect.duplicate()
 	#clear the physical effects now
-	for j in range(effects.size()):
+	for j in range(get_child_count()):
 		if j == 0:
 			continue
-		effects[j].queue_free()
+		get_children()[j].queue_free()
 	
 	
 func _process(_delta):

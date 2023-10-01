@@ -1,0 +1,113 @@
+[gd_scene load_steps=4 format=3 uid="uid://biaav5w6xubi8"]
+
+[ext_resource type="Theme" uid="uid://cogp6u7txrmti" path="res://hud.tres" id="1_t6jsi"]
+[ext_resource type="Script" path="res://Scripts/hud.gd" id="1_vyd8e"]
+[ext_resource type="Texture2D" uid="uid://d1mi1neudw725" path="res://Assets/Textures/ui/ui_pause.png" id="3_jbe3k"]
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "level_time", "level_objective", "btn_pause", "pause_menu", "btn_restart_checkpoint", "btn_restart_level", "btn_main_menu")]
+process_mode = 3
+script = ExtResource("1_vyd8e")
+health_bar = NodePath("Safezones/HealthBar")
+level_time = NodePath("Safezones/LevelTime")
+level_objective = NodePath("Safezones/LevelObjective")
+btn_pause = NodePath("Safezones/Pause")
+pause_menu = NodePath("Safezones/PauseMenu")
+btn_restart_checkpoint = NodePath("Safezones/PauseMenu/RestartCheckpoint")
+btn_restart_level = NodePath("Safezones/PauseMenu/RestartLevel")
+btn_main_menu = NodePath("Safezones/PauseMenu/MainMenu")
+
+[node name="Safezones" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.0
+offset_top = 54.0
+offset_right = -48.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_t6jsi")
+
+[node name="HealthBar" type="ProgressBar" parent="Safezones"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 4.0
+grow_vertical = 2
+theme = ExtResource("1_t6jsi")
+value = 80.0
+fill_mode = 3
+show_percentage = false
+
+[node name="LevelTime" type="Label" parent="Safezones"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 4.0
+offset_right = 177.0
+offset_bottom = 35.0
+theme = ExtResource("1_t6jsi")
+text = "00:00"
+vertical_alignment = 1
+
+[node name="LevelObjective" type="Label" parent="Safezones"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 579.0
+offset_right = 382.0
+offset_bottom = 610.0
+theme = ExtResource("1_t6jsi")
+text = "Objective : "
+vertical_alignment = 1
+
+[node name="Pause" type="Button" parent="Safezones"]
+layout_mode = 0
+offset_left = 1091.0
+offset_top = -4.0
+offset_right = 1153.0
+offset_bottom = 44.0
+focus_mode = 0
+theme = ExtResource("1_t6jsi")
+toggle_mode = true
+icon = ExtResource("3_jbe3k")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="PauseMenu" type="VBoxContainer" parent="Safezones"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = 60.0
+offset_right = -4.0
+offset_bottom = -370.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_t6jsi")
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="RestartCheckpoint" type="Button" parent="Safezones/PauseMenu"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_t6jsi")
+theme_override_font_sizes/font_size = 32
+text = "Self Destruct"
+
+[node name="RestartLevel" type="Button" parent="Safezones/PauseMenu"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_t6jsi")
+theme_override_font_sizes/font_size = 32
+text = "Nuke Instances"
+
+[node name="MainMenu" type="Button" parent="Safezones/PauseMenu"]
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("1_t6jsi")
+theme_override_font_sizes/font_size = 32
+text = " go back to ship "

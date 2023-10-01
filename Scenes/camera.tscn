@@ -1,8 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmrhtgypdx0m0"]
+[gd_scene load_steps=3 format=3 uid="uid://cmrhtgypdx0m0"]
 
 [ext_resource type="Script" path="res://Scripts/camera.gd" id="1_pgpap"]
+[ext_resource type="Texture2D" uid="uid://qled2fwxn76e" path="res://Assets/Particles/light_04.png" id="2_habgs"]
 
 [node name="Camera" type="Camera2D"]
 script = ExtResource("1_pgpap")
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RedScreen" type="PointLight2D" parent="."]
+color = Color(0, 1, 1, 1)
+blend_mode = 1
+texture = ExtResource("2_habgs")
+texture_scale = 2.0

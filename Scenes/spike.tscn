@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://coxsxgm8y2dg0"]
+
+[ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_7ypkn"]
+[ext_resource type="Script" path="res://Scripts/spike.gd" id="1_b5jap"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="3_6qdc6"]
+[ext_resource type="AudioStream" uid="uid://b8k2wnfgc1dqg" path="res://Assets/Sounds/spike_1.mp3" id="4_0irkc"]
+[ext_resource type="AudioStream" uid="uid://ifwasqqplavm" path="res://Assets/Sounds/mechanical_rewind_1.mp3" id="5_2bi4f"]
+[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="6_qkrti"]
+[ext_resource type="Texture2D" uid="uid://cb20lrvd6j7b2" path="res://Assets/Particles/trace_01.png" id="7_47c7y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a7r5c"]
+radius = 3.0
+
+[sub_resource type="Gradient" id="Gradient_ceinh"]
+offsets = PackedFloat32Array(0, 0.0921986, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Spike" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_b5jap")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_a7r5c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("1_7ypkn")
+region_enabled = true
+region_rect = Rect2(48, 24, 8, 8)
+
+[node name="SoundManager" parent="." instance=ExtResource("3_6qdc6")]
+
+[node name="All" type="Marker2D" parent="SoundManager"]
+
+[node name="Spike_1" type="AudioStreamPlayer2D" parent="SoundManager/All"]
+stream = ExtResource("4_0irkc")
+max_distance = 250.0
+attenuation = 5.0
+
+[node name="MechanicalRewind_1" type="AudioStreamPlayer2D" parent="SoundManager/All"]
+stream = ExtResource("5_2bi4f")
+volume_db = -10.0
+max_distance = 250.0
+attenuation = 5.0
+
+[node name="DisposableEffectGenerator" parent="." instance=ExtResource("6_qkrti")]
+
+[node name="Sparks" type="CPUParticles2D" parent="DisposableEffectGenerator"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.83
+randomness = 0.18
+lifetime_randomness = 0.31
+texture = ExtResource("7_47c7y")
+emission_shape = 1
+emission_sphere_radius = 4.0
+particle_flag_align_y = true
+gravity = Vector2(0, 300)
+initial_velocity_min = 193.18
+initial_velocity_max = 193.18
+scale_amount_min = 0.02
+scale_amount_max = 0.03
+color = Color(100, 1, 0.556863, 1)
+color_ramp = SubResource("Gradient_ceinh")

@@ -7,8 +7,9 @@ var knockback_force := 50.0
 var damage_delay := 0.03
 var damage_timer_t := 0.0
 @onready var disposable_effect_generator := $DisposableEffectGenerator
+@onready var sound_manager := $SoundManager
 func _ready():
-	pass
+	sound_manager.play_from_group("All", "Idle", randf_range(0.7, 1.3))
 
 func _process(delta):
 	sprite.global_rotation += turn_speed * delta
@@ -24,8 +25,10 @@ func damage_surrounding():
 		var collision_point = global_position + (body.global_position - global_position)
 		if "health" in body:
 			body.health -= damage
-			disposable_effect_generator.spawn_effect("sparks", collision_point, collision_dir.angle())
+			disposable_effect_generator.spawn_effect("Sparks", collision_point, collision_dir.angle())
+			sound_manager.play_from_group("All", "Cutting")
 		if body is RigidBody2D:
 			var force_dir = (body.global_position - global_position).normalized()
 			body.apply_impulse(force_dir * knockback_force)
 			body.apply_torque_impulse(turn_speed * 10)
+		Global.camera.shake(1.0, 2.0)

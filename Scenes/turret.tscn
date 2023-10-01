@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bv8fhnkjyxyb4"]
+[gd_scene load_steps=19 format=3 uid="uid://bv8fhnkjyxyb4"]
 
 [ext_resource type="Script" path="res://Scripts/turret.gd" id="1_fklyn"]
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_t6w5q"]
@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dt1fhl3srqfcj" path="res://Assets/Particles/star_09.png" id="4_esmcs"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="6_wsw7v"]
 [ext_resource type="Texture2D" uid="uid://c2eyyb3nuuhdm" path="res://Assets/Particles/flare_01.png" id="7_c4j3l"]
+[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="8_imqn2"]
+[ext_resource type="AudioStream" uid="uid://btiyk8wrx16to" path="res://Assets/Sounds/beep_1.mp3" id="9_lqx1g"]
+[ext_resource type="AudioStream" uid="uid://bkisfi3lwrhfu" path="res://Assets/Sounds/robot_move_1.mp3" id="10_5lvrv"]
+[ext_resource type="AudioStream" uid="uid://ubn45ptkty83" path="res://Assets/Sounds/gun_shot_1.mp3" id="10_73bdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30h0n"]
 size = Vector2(16, 14)
@@ -88,7 +92,7 @@ offset = Vector2(0, 100)
 metadata/_edit_lock_ = true
 
 [node name="ShootEffect" type="CPUParticles2D" parent="Head"]
-position = Vector2(95, -2)
+position = Vector2(91, -3)
 emitting = false
 amount = 30
 lifetime = 0.5
@@ -139,9 +143,6 @@ collision_mask = 3
 one_shot = true
 
 [node name="DisposableEffectGenerator" parent="." instance=ExtResource("6_wsw7v")]
-effect_library = {
-"hit": null
-}
 
 [node name="Hit" type="CPUParticles2D" parent="DisposableEffectGenerator"]
 emitting = false
@@ -159,3 +160,25 @@ scale_amount_max = 0.1
 scale_amount_curve = SubResource("Curve_6fpl6")
 color = Color(128.498, 1, 0, 1)
 color_ramp = SubResource("Gradient_ww7t4")
+
+[node name="SoundManager" parent="." instance=ExtResource("8_imqn2")]
+
+[node name="Misc" type="Marker2D" parent="SoundManager"]
+
+[node name="Beep" type="AudioStreamPlayer2D" parent="SoundManager/Misc"]
+stream = ExtResource("9_lqx1g")
+volume_db = -10.0
+max_distance = 500.0
+attenuation = 5.0
+
+[node name="GunShot_1" type="AudioStreamPlayer2D" parent="SoundManager/Misc"]
+stream = ExtResource("10_73bdj")
+max_distance = 500.0
+attenuation = 5.0
+
+[node name="Process" type="Marker2D" parent="SoundManager"]
+
+[node name="Move_1" type="AudioStreamPlayer2D" parent="SoundManager/Process"]
+stream = ExtResource("10_5lvrv")
+max_distance = 300.0
+attenuation = 5.0
