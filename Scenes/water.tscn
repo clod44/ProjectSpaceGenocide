@@ -63,7 +63,6 @@ color_ramp = SubResource("Gradient_mgobh")
 
 [node name="Water_1" type="AudioStreamPlayer2D" parent="SoundManager/Splashes"]
 stream = ExtResource("8_tpq31")
-volume_db = -10.0
 max_distance = 250.0
 attenuation = 5.0
 max_polyphony = 3

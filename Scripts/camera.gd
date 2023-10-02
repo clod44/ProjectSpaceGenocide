@@ -78,6 +78,9 @@ func _physics_process(delta):
 		else:
 			red_screen.energy = lerp(red_screen.energy, 0.0, 0.01)
 			dangle_factor = 0.0
+	else:
+		red_screen.energy = lerp(red_screen.energy, 0.0, 0.01)
+		dangle_factor = 0.0
 	
 	var smoothed_pos = global_position.lerp(target_pos, smoothing_speed * delta * 60)
 	global_position = smoothed_pos + get_local_mouse_position() * mouse_offset_factor 

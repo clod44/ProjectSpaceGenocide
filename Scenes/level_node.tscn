@@ -1,0 +1,49 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqeqgm5ugi1j"]
+
+[ext_resource type="Texture2D" uid="uid://8v16vvvbkqha" path="res://Assets/Textures/ui/level_node.png" id="1_73w7h"]
+[ext_resource type="Script" path="res://Scripts/level_node.gd" id="1_pgit7"]
+[ext_resource type="Theme" uid="uid://cogp6u7txrmti" path="res://hud.tres" id="2_83s5o"]
+[ext_resource type="Texture2D" uid="uid://qled2fwxn76e" path="res://Assets/Particles/light_04.png" id="4_njdi8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vh3d7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x230b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q5dvf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4md3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_esvdu"]
+
+[node name="LevelNode" type="Marker2D"]
+script = ExtResource("1_pgit7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_73w7h")
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(72, 20)
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = -10.0
+offset_right = 38.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(34, 10)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2_83s5o")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_vh3d7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_x230b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_q5dvf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_4md3a")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_esvdu")
+text = "88"
+flat = true
+
+[node name="Light" type="PointLight2D" parent="."]
+enabled = false
+texture = ExtResource("4_njdi8")
+texture_scale = 0.4

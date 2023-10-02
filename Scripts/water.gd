@@ -24,7 +24,7 @@ func _on_body_entered(body):
 		
 		sound_manager.play_random_from_group("Splashes", randf_range(0.9, 1.1))
 		disposable_effect_generator.spawn_effect("Splash", rigidbody.global_position)
-		print("s")
+
 		# Store the original properties in the dictionary
 		bodies_in_water[rigidbody] = {
 			"original_linear_damp": rigidbody.linear_damp,

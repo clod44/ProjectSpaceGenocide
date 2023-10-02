@@ -89,11 +89,12 @@ func shoot():
 		shoot_effect.emitting = true
 		disposable_effect_generator.spawn_effect("Hit", shoot_ray.get_collision_point(), 0)
 		var node = shoot_ray.get_collider()
-		if is_instance_valid(node) and "health" in node:
+		if is_instance_valid(node):
 			if node is RigidBody2D:
 				var knockback_vector = Vector2.from_angle(shoot_ray.global_rotation) * knockback_force
 				node.apply_impulse(knockback_vector)
-			node.health -= damage
+			if "health" in node:
+				node.health -= damage
 
 func look_towards(pos, delta):
 	var is_looking = false
