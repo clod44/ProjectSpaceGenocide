@@ -5,9 +5,13 @@ var max_health := 1000.0
 var health := 1000.0 :
 	set(value):
 		var old_value = health
-		health = value
+		if max_health != null:
+			health = min(value, max_health)
+		else:
+			health = value
 		if old_value > health:
 			take_damage()
+var health_regenation := 2.0
 var roll_speed := 10000.0
 var move_speed := 20000.0
 var propelling_force := 40000.0
@@ -104,6 +108,8 @@ func _physics_process(delta):
 	prev_lin_vel_length = lin_vel_length
 	
 	non_rotating_node.global_rotation = 0.0 
+	
+	health += health_regenation * delta
 
 func take_damage():
 	sound_manager.play_random_from_group("Hits")

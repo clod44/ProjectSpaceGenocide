@@ -18,12 +18,20 @@
 [node name="LevelNode" type="Marker2D"]
 script = ExtResource("1_pgit7")
 
+[node name="Path" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_top = -2.0
+offset_right = 1.0
+offset_bottom = 2.0
+grow_vertical = 2
+pivot_offset = Vector2(0, 2)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_73w7h")
 
 [node name="Button" type="Button" parent="."]
 custom_minimum_size = Vector2(72, 20)
-anchors_preset = -1
+anchors_preset = 9
 anchor_bottom = 1.0
 offset_left = -34.0
 offset_top = -10.0

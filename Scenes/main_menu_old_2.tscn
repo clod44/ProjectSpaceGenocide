@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://bm702jrpj0tn7"]
+
+[ext_resource type="Texture2D" uid="uid://bminbroemih8s" path="res://Assets/Textures/ui/world_map.png" id="1_83oc3"]
+[ext_resource type="PackedScene" uid="uid://cmrhtgypdx0m0" path="res://Scenes/camera.tscn" id="2_xwy52"]
+[ext_resource type="PackedScene" uid="uid://cqeqgm5ugi1j" path="res://Scenes/level_node.tscn" id="3_whowj"]
+[ext_resource type="PackedScene" uid="uid://4y0hwyt18h1l" path="res://Scenes/camera_target.tscn" id="4_py3hg"]
+
+[sub_resource type="Environment" id="Environment_xb3j8"]
+background_mode = 3
+
+[sub_resource type="Curve2D" id="Curve2D_55meh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10000)
+}
+point_count = 2
+
+[node name="MainMenuOld" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xb3j8")
+
+[node name="WorldMap" type="TextureRect" parent="."]
+offset_right = 320.0
+offset_bottom = 1480.0
+texture = ExtResource("1_83oc3")
+
+[node name="Camera" parent="." node_paths=PackedStringArray("follow_node") instance=ExtResource("2_xwy52")]
+follow_node = NodePath("../CameraPath/CameraTarget")
+max_zoom_in = 4.0
+
+[node name="LevelNodes" type="Node2D" parent="."]
+position = Vector2(151, 112)
+
+[node name="LevelNode1" parent="LevelNodes" node_paths=PackedStringArray("next_level") instance=ExtResource("3_whowj")]
+position = Vector2(-70, -20)
+text = "30"
+next_level = NodePath("../LevelNode2")
+
+[node name="LevelNode2" parent="LevelNodes" instance=ExtResource("3_whowj")]
+position = Vector2(85, 65)
+text = "60"
+level_id = "1"
+
+[node name="CameraPath" type="Path2D" parent="."]
+position = Vector2(151, 112)
+curve = SubResource("Curve2D_55meh")
+
+[node name="CameraTarget" parent="CameraPath" instance=ExtResource("4_py3hg")]

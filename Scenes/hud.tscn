@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://biaav5w6xubi8"]
+[gd_scene load_steps=5 format=3 uid="uid://biaav5w6xubi8"]
 
 [ext_resource type="Theme" uid="uid://cogp6u7txrmti" path="res://hud.tres" id="1_t6jsi"]
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="1_vyd8e"]
 [ext_resource type="Texture2D" uid="uid://d1mi1neudw725" path="res://Assets/Textures/ui/ui_pause.png" id="3_jbe3k"]
+[ext_resource type="PackedScene" uid="uid://b8fjuv6abb5td" path="res://Scenes/level_select.tscn" id="4_tcgub"]
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "level_time", "level_objective", "btn_pause", "pause_menu", "btn_restart_checkpoint", "btn_restart_level", "btn_main_menu")]
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "level_time", "level_objective", "btn_pause", "pause_menu", "btn_restart_checkpoint", "btn_restart_level", "btn_main_menu", "level_select")]
 process_mode = 3
 script = ExtResource("1_vyd8e")
 health_bar = NodePath("Safezones/HealthBar")
@@ -15,6 +16,7 @@ pause_menu = NodePath("Safezones/PauseMenu")
 btn_restart_checkpoint = NodePath("Safezones/PauseMenu/RestartCheckpoint")
 btn_restart_level = NodePath("Safezones/PauseMenu/RestartLevel")
 btn_main_menu = NodePath("Safezones/PauseMenu/MainMenu")
+level_select = NodePath("Safezones/LevelSelect")
 
 [node name="Safezones" type="Control" parent="."]
 layout_mode = 3
@@ -111,3 +113,10 @@ focus_mode = 0
 theme = ExtResource("1_t6jsi")
 theme_override_font_sizes/font_size = 32
 text = " go back to ship "
+
+[node name="LevelSelect" parent="Safezones" instance=ExtResource("4_tcgub")]
+visible = false
+offset_left = 1058.0
+offset_top = 312.0
+offset_right = 1158.0
+offset_bottom = 612.0

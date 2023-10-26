@@ -34,7 +34,8 @@ var player = null :
 
 var level_time := 0.0
 var level_time_started := false
-
+var game_scene = preload("res://Scenes/game.tscn")
+var hud = null
 
 func _process(delta):
 	game_time_minutes += delta * game_time_minutes_speed

@@ -31,6 +31,7 @@ func _ready():
 	flare_tween.kill()
 	is_active = is_active
 	connect("body_entered", on_body_enter)
+	connect("body_exited", on_body_exit)
 
 
 func on_body_enter(body):
@@ -38,3 +39,10 @@ func on_body_enter(body):
 		is_active = true
 		sound_manager.play_from_group("All", "Checkpoint_1", randf_range(0.9, 1.1))
 		body.spawn_position = global_position 
+	if Global.hud != null:
+		Global.hud.level_select_visible = true
+
+func on_body_exit(body):
+	if Global.hud != null and "spawn_position" in body:
+		Global.hud.level_select_visible = false
+	

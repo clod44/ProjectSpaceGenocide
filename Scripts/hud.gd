@@ -16,10 +16,17 @@ var player = null
 @export var btn_restart_level : Button
 @export var btn_main_menu : Button
 
+@export var level_select : Control
+@export var level_select_visible := false :
+	set(value):
+		level_select_visible = value
+		if level_select != null:
+			level_select.visible = level_select_visible
 
 @onready var game_node = get_parent()
+
 func _ready():
-	print(game_node)
+	level_select_visible = level_select_visible
 	Global.connect("player_updated", on_player_update)
 	game_node.connect("level_updated", on_level_update)
 	on_player_update()
@@ -28,6 +35,8 @@ func _ready():
 	btn_restart_checkpoint.connect("pressed", on_btn_restart_checkpoint_press)
 	btn_restart_checkpoint.connect("pressed", on_btn_restart_level_press)
 	btn_main_menu.connect("pressed", on_btn_main_menu_press)
+	
+	Global.hud = self
 
 func on_level_update():
 	level_objective.text = "Objective : "+game_node.current_level.current_level_objective
