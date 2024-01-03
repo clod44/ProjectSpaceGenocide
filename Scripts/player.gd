@@ -52,7 +52,7 @@ var is_dead := false :
 			collision_shape.set_deferred("disabled", is_dead)
 			
 			if is_dead:
-				Global.stop_level_time()
+				#Global.stop_level_time()
 				if move_input != null:
 					move_input = 0
 					linear_velocity = Vector2.ZERO
