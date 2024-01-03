@@ -8,8 +8,9 @@ Simple platformer where you, an auto engaged mission robot, go down to the post-
 Basic platformer controller. You also have some sort of propellant which has a capacity and refills some amount per second.
 
 ## 🖼️ Screenshots
-![Screenshot 1](Screenshots/screenshot1.png)
-![Screenshot 2](Screenshots/screenshot2.png)
+![Screenshot 1](Screenshots/ss1.png)<br>
+![Screenshot 2](Screenshots/ss2.png)<br>
+![Screenshot 3](Screenshots/ss3.png)<br>
 
 ## 📥 Installation
 You can download the project and open it with godot 4.2 to play. There are no release versions at the moment.
