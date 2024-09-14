@@ -13,11 +13,11 @@ var mission_list = {
 	},
 	"1" : {
 		"name" : "hallway",
-		"file" : "res://Scenes/Levels/level_1.tscn"
+		"file" : "res://Scenes/Levels/level_2.tscn"
 	},
 	"2" :  {
 		"name" : "reactor",
-		"file" : "res://Scenes/Levels/level_2.tscn"
+		"file" : "res://Scenes/Levels/level_3.tscn"
 	},
 }
 
