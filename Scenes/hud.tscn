@@ -1,14 +1,79 @@
-[gd_scene load_steps=5 format=3 uid="uid://biaav5w6xubi8"]
+[gd_scene load_steps=18 format=3 uid="uid://biaav5w6xubi8"]
 
 [ext_resource type="Theme" uid="uid://cogp6u7txrmti" path="res://hud.tres" id="1_t6jsi"]
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="1_vyd8e"]
+[ext_resource type="FontFile" uid="uid://b064taakvx8mh" path="res://Assets/Fonts/Quinquefive-ALoRM.ttf" id="3_6s011"]
 [ext_resource type="Texture2D" uid="uid://d1mi1neudw725" path="res://Assets/Textures/ui/ui_pause.png" id="3_jbe3k"]
 [ext_resource type="PackedScene" uid="uid://b8fjuv6abb5td" path="res://Scenes/level_select.tscn" id="4_tcgub"]
 
-[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "level_time", "level_objective", "btn_pause", "pause_menu", "btn_restart_checkpoint", "btn_restart_level", "btn_main_menu", "level_select")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3srut"]
+bg_color = Color(1, 1, 1, 0.117647)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q0thr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vihbu"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msqlj"]
+bg_color = Color(0.498039, 0.498039, 0.498039, 0.505882)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtg5d"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_6ifd8"]
+default_font = ExtResource("3_6s011")
+default_font_size = 16
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_3srut")
+Button/styles/normal = SubResource("StyleBoxEmpty_q0thr")
+Button/styles/pressed = SubResource("StyleBoxFlat_vihbu")
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.0784314)
+Label/constants/shadow_outline_size = 10
+ProgressBar/styles/background = SubResource("StyleBoxFlat_msqlj")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_dtg5d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p30mp"]
+bg_color = Color(0.986676, 0.102541, 0, 1)
+
+[sub_resource type="Theme" id="Theme_t3v70"]
+default_font = ExtResource("3_6s011")
+default_font_size = 16
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_3srut")
+Button/styles/normal = SubResource("StyleBoxEmpty_q0thr")
+Button/styles/pressed = SubResource("StyleBoxFlat_vihbu")
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.0784314)
+Label/constants/shadow_outline_size = 10
+ProgressBar/styles/background = SubResource("StyleBoxFlat_msqlj")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_dtg5d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwlwn"]
+bg_color = Color(0, 0.716667, 1, 0.337255)
+
+[sub_resource type="Theme" id="Theme_323u5"]
+default_font = ExtResource("3_6s011")
+default_font_size = 16
+Button/colors/font_pressed_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_3srut")
+Button/styles/normal = SubResource("StyleBoxEmpty_q0thr")
+Button/styles/pressed = SubResource("StyleBoxFlat_vihbu")
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.0784314)
+Label/constants/shadow_outline_size = 10
+ProgressBar/styles/background = SubResource("StyleBoxFlat_msqlj")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_dtg5d")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtxix"]
+bg_color = Color(1, 1, 1, 0.0784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pouhf"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="HUD" type="CanvasLayer" node_paths=PackedStringArray("health_bar", "battery_bar", "propeller_bar", "level_time", "level_objective", "btn_pause", "pause_menu", "btn_restart_checkpoint", "btn_restart_level", "btn_main_menu", "level_select")]
 process_mode = 3
 script = ExtResource("1_vyd8e")
 health_bar = NodePath("Safezones/HealthBar")
+battery_bar = NodePath("Safezones/BatteryBar")
+propeller_bar = NodePath("Safezones/PropellerBar")
 level_time = NodePath("Safezones/LevelTime")
 level_objective = NodePath("Safezones/LevelObjective")
 btn_pause = NodePath("Safezones/Pause")
@@ -38,7 +103,37 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 4.0
 grow_vertical = 2
-theme = ExtResource("1_t6jsi")
+theme = SubResource("Theme_6ifd8")
+theme_override_styles/background = SubResource("StyleBoxFlat_p30mp")
+value = 80.0
+fill_mode = 3
+show_percentage = false
+
+[node name="BatteryBar" type="ProgressBar" parent="Safezones"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_right = 15.0
+grow_vertical = 2
+theme = SubResource("Theme_t3v70")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qwlwn")
+value = 80.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PropellerBar" type="ProgressBar" parent="Safezones"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = 25.0
+grow_vertical = 2
+theme = SubResource("Theme_323u5")
+theme_override_styles/background = SubResource("StyleBoxFlat_mtxix")
+theme_override_styles/fill = SubResource("StyleBoxFlat_pouhf")
 value = 80.0
 fill_mode = 3
 show_percentage = false

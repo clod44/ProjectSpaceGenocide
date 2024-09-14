@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://db4i3cdljc5wm" path="res://Assets/Particles/smoke_01.png" id="4_um5ym"]
 [ext_resource type="PackedScene" uid="uid://bi2msp4erewla" path="res://Scenes/Effects/trail.tscn" id="6_710vi"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="7_3nse1"]
-[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="8_dbjkr"]
+[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="8_dbjkr"]
 [ext_resource type="PackedScene" uid="uid://bk1tjhu2is26h" path="res://Scenes/flashbang.tscn" id="8_jkh54"]
 [ext_resource type="AudioStream" uid="uid://bc2bntsjs0bql" path="res://Assets/Sounds/hit_1.mp3" id="9_bda4p"]
 [ext_resource type="AudioStream" uid="uid://dsl8m2n5ajfdm" path="res://Assets/Sounds/hit_2.mp3" id="10_wsbp2"]
@@ -66,8 +66,8 @@ collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_ydrdn")
 gravity_scale = 1.5
 continuous_cd = 1
-max_contacts_reported = 3
 contact_monitor = true
+max_contacts_reported = 3
 linear_damp = 2.0
 angular_damp = 2.0
 script = ExtResource("1_4sepl")

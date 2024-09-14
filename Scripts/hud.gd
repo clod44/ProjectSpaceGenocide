@@ -2,6 +2,9 @@ extends CanvasLayer
 
 
 @export var health_bar : ProgressBar
+@export var battery_bar : ProgressBar
+@export var propeller_bar : ProgressBar
+
 @export var level_time : Label
 @export var level_objective : Label
 @export var btn_pause : Button
@@ -45,15 +48,28 @@ func _process(delta):
 	if player != null:
 		health_bar.visible = true
 		health_bar.value = lerp(health_bar.value, player.health, delta * 10.0)
+		battery_bar.visible = true
+		battery_bar.value = lerp(battery_bar.value, player.battery, delta * 10.0)
+		propeller_bar.visible = true
+		propeller_bar.value = lerp(propeller_bar.value, player.propeller_fuel, delta * 10.0)
+
 
 func on_player_update():
 	player = Global.player
 	if player != null:
 		health_bar.max_value = player.max_health
 		health_bar.value = player.health
+		battery_bar.max_value = player.max_battery
+		battery_bar.value = player.battery
+		propeller_bar.max_value = player.propeller_fuel_max
+		propeller_bar.value = player.propeller_fuel
 	else:
 		health_bar.max_value = 1.0
 		health_bar.value = 0.0
+		battery_bar.max_value = 1.0
+		battery_bar.value = 0.0
+		propeller_bar.max_value = 1.0
+		propeller_bar.value = 0.0
 
 func on_btn_pause_press():
 	get_tree().paused = !get_tree().paused
