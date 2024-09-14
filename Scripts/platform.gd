@@ -5,7 +5,7 @@ extends Marker2D
 @onready var platform := $Node/PlatformPhysical
 @export var desired_force := 100000.0
 @export var initial_angle := 0.0
-@export var rotate := true
+@export var can_rotate := true
 @export var rotation_torque := 1000000.0
 
 func _ready():
@@ -22,5 +22,5 @@ func _process(_delta):
 func _physics_process(delta):
 	var force = global_position - platform.global_position
 	platform.apply_force(force * delta * desired_force)
-	if rotate:
+	if can_rotate:
 		platform.apply_torque(rotation_torque * delta)

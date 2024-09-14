@@ -109,19 +109,19 @@ func look_towards(pos, delta):
 		var angle_degrees = angle * 180.0 / PI
 
 		# Calculate the difference between the current rotation and the angle
-		var angle_difference = angle_degrees - head.global_rotation_degrees
+		var difference_angle = angle_degrees - head.global_rotation_degrees
 
 		# Wrap the angle difference to the range of -180 to 180 degrees
-		if angle_difference > 180.0:
-			angle_difference -= 360.0
-		elif angle_difference < -180.0:
-			angle_difference += 360.0
+		if difference_angle > 180.0:
+			difference_angle -= 360.0
+		elif difference_angle < -180.0:
+			difference_angle += 360.0
 
 		# Check if the angle difference is within the specified error margin
-		is_looking = abs(angle_difference) <= aim_error_margin
+		is_looking = abs(difference_angle) <= aim_error_margin
 		
 		# Calculate the angular velocity based on the angle difference
-		head_angular_vel += clamp(angle_difference, -1.0, 1.0) * head_turn_speed
+		head_angular_vel += clamp(difference_angle, -1.0, 1.0) * head_turn_speed
 	head.global_rotation_degrees += head_angular_vel * delta
 	head_angular_vel *= head_turn_damping
 	

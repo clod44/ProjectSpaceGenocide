@@ -10,7 +10,7 @@ func _ready():
 		level_select_buttons.append(level_select_button)
 		
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 
