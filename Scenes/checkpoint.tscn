@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/checkpoint.gd" id="1_hsu2p"]
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_iwkur"]
-[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="4_ebu8n"]
+[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="4_ebu8n"]
 [ext_resource type="Texture2D" uid="uid://c2eyyb3nuuhdm" path="res://Assets/Particles/flare_01.png" id="4_yarey"]
 [ext_resource type="AudioStream" uid="uid://b6hbc6vjcvml4" path="res://Assets/Sounds/checkpoint_1.mp3" id="5_ljb1o"]
 

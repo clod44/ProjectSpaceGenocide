@@ -17,7 +17,3 @@ func _process(delta):
 func on_level_button_pressed(button):
 	Global.selected_mission = button.get_tooltip()
 	get_tree().change_scene_to_packed(Global.game_scene)
-
-
-
-

@@ -52,4 +52,3 @@ func _on_body_exited(body):
 
 		# Remove the entry from the dictionary
 		bodies_in_water.erase(rigidbody)
-
