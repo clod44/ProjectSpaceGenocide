@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dc74wybil5jg1" path="res://Assets/Textures/tileset_1.png" id="1_7ypkn"]
 [ext_resource type="Script" path="res://Scripts/spike.gd" id="1_b5jap"]
-[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="3_6qdc6"]
+[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="3_6qdc6"]
 [ext_resource type="AudioStream" uid="uid://b8k2wnfgc1dqg" path="res://Assets/Sounds/spike_1.mp3" id="4_0irkc"]
 [ext_resource type="AudioStream" uid="uid://ifwasqqplavm" path="res://Assets/Sounds/mechanical_rewind_1.mp3" id="5_2bi4f"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="6_qkrti"]
