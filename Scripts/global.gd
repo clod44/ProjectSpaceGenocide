@@ -9,7 +9,7 @@ var selected_mission = "0"
 var mission_list = {
 	"0" : {
 		"name" : "intro",
-		"file" : "res://Scenes/Levels/level_1.tscn"
+		"file" : "res://Scenes/Levels/level_2.tscn" #changed to 2 for testing
 	},
 	"1" : {
 		"name" : "hallway",

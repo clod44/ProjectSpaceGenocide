@@ -1,8 +1,8 @@
-[gd_scene load_steps=15 format=4 uid="uid://bphg38644olbv"]
+[gd_scene load_steps=15 format=4 uid="uid://dw3q7ru05qaue"]
 
-[ext_resource type="Script" path="res://Scripts/force_field.gd" id="1_3xlts"]
-[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="3_tn55m"]
-[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="4_6m6xn"]
+[ext_resource type="Script" path="res://Scripts/force_field.gd" id="1_3uqv2"]
+[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="2_ejp3d"]
+[ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="3_mci8i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ptf16"]
 radius = 50.0
@@ -108,8 +108,9 @@ offsets = PackedFloat32Array(0, 0.221239, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="ForceField" type="Area2D"]
+position = Vector2(-438, -133)
 collision_mask = 7
-script = ExtResource("1_3xlts")
+script = ExtResource("1_3uqv2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ptf16")
@@ -129,7 +130,7 @@ region_rect = Rect2(64, 0, 8, 8)
 
 [node name="ActivationTimer" type="Timer" parent="."]
 
-[node name="SoundManager" parent="." instance=ExtResource("3_tn55m")]
+[node name="SoundManager" parent="." instance=ExtResource("2_ejp3d")]
 script = SubResource("GDScript_jfajn")
 
 [node name="All" type="Marker2D" parent="SoundManager"]
@@ -140,7 +141,7 @@ max_distance = 250.0
 attenuation = 5.0
 max_polyphony = 2
 
-[node name="DisposableEffectGenerator" parent="." instance=ExtResource("4_6m6xn")]
+[node name="DisposableEffectGenerator" parent="." instance=ExtResource("3_mci8i")]
 script = SubResource("GDScript_nggaw")
 
 [node name="AuraOut" type="CPUParticles2D" parent="DisposableEffectGenerator"]

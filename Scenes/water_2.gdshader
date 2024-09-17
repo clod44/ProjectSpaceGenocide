@@ -11,9 +11,8 @@ void fragment() {
     COLOR = color;
 }
 
-void vertex(){ 
+void vertex(){
 	vec2 normalized_uv = SCREEN_UV / refraction_stretch; // Normalize the UV coordinates based on the texture size
 	float refraction_offset = texture(refraction_map, normalized_uv).r;
-	
-}
 
+}
