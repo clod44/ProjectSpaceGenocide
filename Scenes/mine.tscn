@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/mine.gd" id="1_rvjqs"]
 [ext_resource type="PackedScene" uid="uid://b6sqmp5g12khd" path="res://Scenes/Effects/disposable_effect_generator.tscn" id="4_1n6id"]
-[ext_resource type="PackedScene" path="res://Scenes/sound_manager.tscn" id="4_dj82y"]
+[ext_resource type="PackedScene" uid="uid://bng6qsiwltdqg" path="res://Scenes/sound_manager.tscn" id="4_dj82y"]
 [ext_resource type="Texture2D" uid="uid://4ifi3umd3ofu" path="res://Assets/Particles/smoke_07.png" id="4_xj84c"]
 [ext_resource type="AudioStream" uid="uid://c2rtavngt4rcw" path="res://Assets/Sounds/explosion_1.mp3" id="5_f7qst"]
 [ext_resource type="PackedScene" uid="uid://bk1tjhu2is26h" path="res://Scenes/flashbang.tscn" id="6_6gw53"]

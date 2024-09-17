@@ -58,21 +58,21 @@ collision_visibility_mode = 1
 
 [node name="Props" type="Node2D" parent="."]
 
+[node name="LampSmall" parent="Props" instance=ExtResource("4_0qnfo")]
+position = Vector2(-360, -61)
+shadow_enabled = true
+
 [node name="ForceField2" parent="Props" instance=ExtResource("3_ofo0w")]
 position = Vector2(1452, 110)
 
 [node name="ForceField" parent="Props/ForceField2" instance=ExtResource("3_ofo0w")]
 position = Vector2(52, 0)
 
-[node name="LampSmall" parent="Props/ForceField2" instance=ExtResource("4_0qnfo")]
-position = Vector2(288, 5)
-shadow_enabled = true
+[node name="BoxBig6" parent="Props" instance=ExtResource("3_42104")]
+position = Vector2(1535, 128)
 
 [node name="BoxBig5" parent="Props" instance=ExtResource("3_42104")]
 position = Vector2(1476, 128)
-
-[node name="BoxBig" parent="Props/BoxBig5" instance=ExtResource("3_42104")]
-position = Vector2(59, 0)
 
 [node name="Mine15" parent="Props" instance=ExtResource("5_ekuti")]
 position = Vector2(1504, 144)
@@ -86,6 +86,21 @@ curve = SubResource("Curve2D_5sd1l")
 
 [node name="Saw" parent="Props/PathGenerator4" instance=ExtResource("3_ag1cf")]
 
+[node name="BoxSmall5" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1291, 84)
+
+[node name="BoxSmall4" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1316, 60)
+
+[node name="BoxSmall2" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1297, 36)
+
+[node name="BoxSmall3" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1314, 36)
+
+[node name="BoxSmall" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1300, 28)
+
 [node name="Spike3" parent="Props" instance=ExtResource("3_mlo6o")]
 position = Vector2(1276, 112)
 
@@ -94,21 +109,6 @@ position = Vector2(56, -48)
 
 [node name="Spike5" parent="Props/Spike3" instance=ExtResource("3_mlo6o")]
 position = Vector2(16, 0)
-
-[node name="BoxSmall5" parent="Props/Spike3" instance=ExtResource("4_ibns2")]
-position = Vector2(15, -28)
-
-[node name="BoxSmall4" parent="Props/Spike3" instance=ExtResource("4_ibns2")]
-position = Vector2(40, -52)
-
-[node name="BoxSmall2" parent="Props/Spike3" instance=ExtResource("4_ibns2")]
-position = Vector2(21, -76)
-
-[node name="BoxSmall3" parent="Props/Spike3" instance=ExtResource("4_ibns2")]
-position = Vector2(38, -76)
-
-[node name="BoxSmall" parent="Props/Spike3" instance=ExtResource("4_ibns2")]
-position = Vector2(24, -84)
 
 [node name="PathGenerator3" parent="Props" instance=ExtResource("3_ngakp")]
 position = Vector2(1264, 35)
@@ -127,14 +127,14 @@ position = Vector2(1299, 88)
 [node name="Mine12" parent="Props" instance=ExtResource("5_ekuti")]
 position = Vector2(1305, 40)
 
+[node name="BoxSmall6" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(1226, -20)
+
+[node name="BoxBig7" parent="Props" instance=ExtResource("3_42104")]
+position = Vector2(1219, -8)
+
 [node name="Spike" parent="Props" instance=ExtResource("3_mlo6o")]
 position = Vector2(1256, -8)
-
-[node name="BoxBig" parent="Props/Spike" instance=ExtResource("3_42104")]
-position = Vector2(-37, 0)
-
-[node name="BoxSmall" parent="Props/Spike/BoxBig" instance=ExtResource("4_ibns2")]
-position = Vector2(7, -12)
 
 [node name="Mine11" parent="Props" instance=ExtResource("5_ekuti")]
 position = Vector2(1234, 0)
@@ -148,11 +148,11 @@ position = Vector2(1124, 24)
 [node name="Turret" parent="Props" instance=ExtResource("4_y81e1")]
 position = Vector2(1006, -16)
 
+[node name="BoxSmall7" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(945, -12)
+
 [node name="BoxBig4" parent="Props" instance=ExtResource("3_42104")]
 position = Vector2(957, -16)
-
-[node name="BoxSmall" parent="Props/BoxBig4" instance=ExtResource("4_ibns2")]
-position = Vector2(-12, 4)
 
 [node name="ForceField" parent="Props" instance=ExtResource("3_ofo0w")]
 position = Vector2(864, -40)
@@ -210,17 +210,17 @@ position = Vector2(73, -9)
 [node name="Saw2" parent="Props/Saw" instance=ExtResource("3_ag1cf")]
 position = Vector2(148, -20)
 
+[node name="BoxBig8" parent="Props" instance=ExtResource("3_42104")]
+position = Vector2(244, -56)
+
+[node name="BoxBig9" parent="Props" instance=ExtResource("3_42104")]
+position = Vector2(232, -40)
+
+[node name="BoxSmall8" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(219, -36)
+
 [node name="BoxBig3" parent="Props" instance=ExtResource("3_42104")]
 position = Vector2(248, -40)
-
-[node name="BoxBig" parent="Props/BoxBig3" instance=ExtResource("3_42104")]
-position = Vector2(-4, -16)
-
-[node name="BoxBig2" parent="Props/BoxBig3" instance=ExtResource("3_42104")]
-position = Vector2(-16, 0)
-
-[node name="BoxSmall" parent="Props/BoxBig3" instance=ExtResource("4_ibns2")]
-position = Vector2(-29, 4)
 
 [node name="Mine5" parent="Props" instance=ExtResource("5_ekuti")]
 position = Vector2(-8, -80)
@@ -237,23 +237,23 @@ position = Vector2(-142, -72)
 [node name="Mine2" parent="Props" instance=ExtResource("5_ekuti")]
 position = Vector2(-116, -72)
 
+[node name="BoxSmall9" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(-404, -44)
+
+[node name="BoxSmall10" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(-388, -28)
+
 [node name="BoxBig" parent="Props" instance=ExtResource("3_42104")]
 position = Vector2(-400, -32)
 
-[node name="BoxSmall" parent="Props/BoxBig" instance=ExtResource("4_ibns2")]
-position = Vector2(-4, -12)
+[node name="BoxSmall11" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(-363, -44)
 
-[node name="BoxSmall2" parent="Props/BoxBig" instance=ExtResource("4_ibns2")]
-position = Vector2(12, 4)
+[node name="BoxSmall12" parent="Props" instance=ExtResource("4_ibns2")]
+position = Vector2(-357, -28)
 
 [node name="BoxBig2" parent="Props" instance=ExtResource("3_42104")]
 position = Vector2(-369, -32)
-
-[node name="BoxSmall" parent="Props/BoxBig2" instance=ExtResource("4_ibns2")]
-position = Vector2(6, -12)
-
-[node name="BoxSmall2" parent="Props/BoxBig2" instance=ExtResource("4_ibns2")]
-position = Vector2(12, 4)
 
 [node name="Waters" type="Node2D" parent="."]
 

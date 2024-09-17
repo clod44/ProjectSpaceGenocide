@@ -23,9 +23,19 @@ var battery := 1000.0 :
 		if old_value > battery:
 			battery_discharged()
 
+@onready var shockwave_area : Area2D = $ShockwaveArea
+var shockwave_charging := false
+var shockwave_damage := 10.0
+var shockwave_charge_start_delay := 500 #ms
+var shockwave_charge_start_t := 0
+var shockwave_knockback := 25.0
+
 var move_battery_discharge_rate := 1.0;
 var jump_battery_discharge_rate := 5.0;
+var shockwave_battery_discharge_rate := 10.0
 var propeller_battery_discharge_rate := 10.0;
+
+
 
 var roll_speed := 10000.0
 var move_speed := 20000.0
@@ -91,7 +101,21 @@ func _ready():
 	collision_shape_radius = collision_shape.shape.radius
 	
 func _process(delta):
-	move_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	move_input = 0
+	var current_time = Time.get_ticks_msec()
+	if shockwave_charging:
+		if !discharge_battery(shockwave_battery_discharge_rate * delta):
+			shock()
+	else:
+		move_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	
+	if Input.is_action_just_pressed("fire"):
+		shockwave_charge_start_t = current_time
+		shockwave_charging = true
+	if Input.is_action_just_released("fire") and shockwave_charging:
+		shock()
+	
+	
 	if abs(move_input) > 0:
 		if !discharge_battery(move_battery_discharge_rate * delta):
 			move_input = 0
@@ -157,6 +181,30 @@ func discharge_battery(amount):
 		successfull = true;
 	battery -= amount;
 	return successfull
+
+func shock():
+	shockwave_charging = false;
+	var current_time = Time.get_ticks_msec()
+	var charge_duration = current_time - (shockwave_charge_start_t + shockwave_charge_start_delay)
+	var charge_amount = charge_duration * 0.01
+	if charge_amount < 1:
+		print("failed to shock! " + str(charge_amount) + "ms")
+		return
+	var damage = charge_amount * shockwave_damage
+	disposable_effect_generator.spawn_effect("Explosion", global_position, 0)
+	disposable_effect_generator.spawn_effect("Flashbang", global_position, 0)
+	sound_manager.play_random_from_group("Explosions")
+	
+	for body in shockwave_area.get_overlapping_bodies():
+		if body is RigidBody2D:
+			var dir := Vector2.from_angle(randf_range(0, TAU))
+			body.apply_impulse(dir * shockwave_knockback * charge_amount)
+		if body != self and "health" in body:
+			body.health -= damage
+	print("shock! "+str(charge_amount)+"ms")
+	print("damage calculated: "+str(damage))
+	
+	
 
 func respawn_at(pos = Vector2.ZERO):
 	is_dead = true
